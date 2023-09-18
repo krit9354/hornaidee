@@ -1,4 +1,4 @@
-import './register.css';
+import './register.scoped.css';
 function Register() {
   return (
     <body>

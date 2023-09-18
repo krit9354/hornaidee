@@ -1,4 +1,4 @@
-import './Login.css';
+import './Login.scoped.css';
 function Login() {
   return (
     <body>
