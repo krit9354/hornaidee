@@ -1,4 +1,4 @@
-import "./App.css"
+import "./App.scoped.css"
 import Bt from "./components/bt";
 import Card from "./components/card";
 import Navbar from "./components/nav";
@@ -14,7 +14,8 @@ function Main() {
                     <Bt text="seach"/>
                 </div>
                 <div>
-                    <Card></Card>
+                    <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+                    
                 </div>
             </div>
         </div>

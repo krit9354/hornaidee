@@ -8,6 +8,8 @@
     width: 1050px;
     border: 1px solid black;
     margin: auto;
+    display: flex;
+    align-items: center;
 }
 
 .right_nav{
@@ -17,3 +19,4 @@
 .left_nav{
     margin-left: auto;
 }
+

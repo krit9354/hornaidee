@@ -1,4 +1,4 @@
-import "./bt.css"
+import "./bt.scoped.css"
 function Bt(props){
     const {text} = props
     return(
