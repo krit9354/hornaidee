@@ -1,80 +1,33 @@
-body {
-  text-align: center;
-  background-color: rgba(241, 214, 171, 1);
-  height: 1024px;
-  width: 900px;
-  margin-top: 100px;
-  margin: auto;
-}
-
-.login_page{
-  background-color: white;
-  border-radius: 60px;
-  padding: 40px;
-  padding-bottom: 80px;
-  padding-left: 100px;
-  padding-right: 100px;
-  height: 625px;
-  margin-top: 80px;
-  border:black 0.5px solid;
-  box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.14);
-}
-
-.dha{
-  background-color: white;
-  border-radius: 60px;
-  padding: 50px;
-  margin-top: 80px;
-  border:black 0.5px solid;
-  box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.14);
-  padding-left: 150px;
-}
-
-h6,h1,p{
-  margin: 0;
-}
-
-.username,.password{
-  color: rgba(56, 71, 11, 1);
-  font-size: 48px;
-  text-align: left;
-}
-
-.hornaid{
-  color: rgba(124, 145, 61, 1);
-  font-size: 96px;
-}
-
-.login_page > *:not(:first-child){
-  margin-top: 50px;
-}
-
-.input{
-  width: 700px;
-  font-size: 40px;
-  box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  height: 50px;
-  
-}
-
-.login_bt{
-  padding: 10px;
-  width: 200px;
-  font-size: 40px;
-  border-radius: 10px;
-  box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.1);
-}
-
-.dha >*{
-  font-size: 48px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-content: center;
 }
 
 .flex{
-  display: flex;
+    display: flex;
 }
 
-.rgt_bt{
-  margin-left: 20px;
-  color: rgba(23, 107, 233, 1);
+.banner{
+    width: 100%;
+}
+
+.container{
+    width: 1050px;
+    margin: auto;
+}
+
+.search{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.search input{
+    height: 34px;
+    border-radius: 5px;
+    border: 0;
+    background-color: rgba(249, 246, 242, 1);
+    padding:10px
 }

@@ -1,24 +1,24 @@
-import './App.css';
-function App() {
-  return (
-    <body>
-      <div className='login_page'>
-        <h1 className='hornaid'>หอไหนD?</h1>
-        <h6 className='username'>username</h6>
-        <input type='text' className='input'></input>
-        <h6 className='password'>password</h6>
-        <input type='password' className='input'></input><br/>
-        <button className='login_bt'>login</button>
-      </div>
+import "./App.css"
+import Bt from "./components/bt";
+import Card from "./components/card";
+import Navbar from "./components/nav";
 
-      <div className='dha'>
-        <div className='flex'>
-          <p>don’t have acount ?</p>
-          <i className='rgt_bt'>register</i>
+function Main() {
+    return(
+        <div className="Main">
+            <Navbar/>
+            <img src="/img/banner (1).svg" alt="banner" className="banner"/>
+            <div className="container">
+                <div className="search">
+                    <input type="text"/>
+                    <Bt text="seach"/>
+                </div>
+                <div>
+                    <Card></Card>
+                </div>
+            </div>
         </div>
-        
-      </div>
-    </body>
-  );
+    )
 }
-export default App;
+
+export default Main;
