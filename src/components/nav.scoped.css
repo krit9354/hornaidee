@@ -6,17 +6,25 @@
 }
 .container{
     width: 1050px;
-    border: 1px solid black;
     margin: auto;
     display: flex;
     align-items: center;
 }
 
-.right_nav{
+.left_nav{
     display: flex;
     align-items: center;
 }
-.left_nav{
+.right_nav{
     margin-left: auto;
 }
 
+.line{
+    height: 40px;
+    width: 1px;
+    background-color: rgba(160, 133, 91, 1);
+}
+
+.left_nav *{
+    margin-right: 10px;
+}
