@@ -7,31 +7,28 @@ body{
 }
 .background{
   background-color: rgba(241, 214, 171, 1);
-  height: 100%;
-  width: 100%;
-  padding-left: 25%;
-  padding-right: 25%;
 
 }
 
 .register_box{
   background-color: white;
   border-radius: 60px;
-  padding: auto;
   padding-left: 100px;
   padding-right: 100px;
-  height: 800px;
+  height: 700px;
   margin-top: 0;
+  
   border:black 0.5px solid;
   box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.14);
   text-align: center;
+  
 }
 
 .dha{
   background-color: white;
   border-radius: 60px;
-  padding: 50px;
-  margin-top: 80px;
+  padding: 45px;
+  margin-top: 70px;
   border:black 0.5px solid;
   box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.14);
   padding-left: 150px;
@@ -49,7 +46,7 @@ h6,h1,p{
 
 .hornaid{
   color: rgba(124, 145, 61, 1);
-  font-size: 96px;
+  font-size: 90px;
 }
 
 .login_page > *:not(:first-child){
@@ -72,7 +69,7 @@ h6,h1,p{
   border-radius: 10px;
   box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.1);
   height: 75px;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 
 .dha >*{
@@ -89,5 +86,11 @@ h6,h1,p{
 }
 
 .rang{
-  margin-top: 7%;
+  margin-top: 4%;
+}
+.containei{
+  height: 963px;
+  width: 900px;
+  margin:auto ;
+
 }
