@@ -3,7 +3,7 @@ function Card(props){
     const {dorm} = props
     return(
         <div className="card">
-            <img src={dorm.url}/>
+            <div className="image"><img src={dorm.url}/></div>
             <div className="info">
                 <h6 className="Dorm_name">{dorm.dorm_name}</h6>
                 <p className="price_info">{dorm.price}บาท/เดือน</p>

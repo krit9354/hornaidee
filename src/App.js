@@ -5,11 +5,23 @@ import Navbar from "./components/nav";
 import Filter from "./components/filter"
 import Bt2 from "./components/bt2";
 import dorms from "./data/dorms";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 
 
+    
 function Main() {
-    const dormCard = dorms.map((dorm,index) => {
+    const [dormlist, setdormlist] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/").then((response) =>{
+            setdormlist(response.data);
+        });
+    })
+
+    
+    const dormCard = dormlist.map((dorm,index) => {
         return <Card key={index} dorm={dorm}></Card>
     })
 
