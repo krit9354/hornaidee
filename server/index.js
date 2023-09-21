@@ -13,15 +13,28 @@ const db = mysql.createConnection({
   database: "hornai_d",
 });
 
-app.get("/", (req, res) => {
-    db.query("SELECT * FROM dorm_detail", (err, result) => {
+app.post("/",(req, res)=>{
+  console.log(req.body)
+  const {minprice,maxprice} = req.body
+  if (minprice === null || maxprice === null){
+    db.query("SELECT* FROM dorm_detail", (err, result) => {
       if (err) {
         console.log(err);
       } else {
         res.send(result);
       }
     });
-});
+  }else{
+    db.query("SELECT * FROM dorm_detail WHERE price >= ? and price <= ?",[minprice,maxprice], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  }
+  
+})
 
 app.listen(3001, () => {
     console.log("Yey, your server is running on port 3001");

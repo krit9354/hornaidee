@@ -12,7 +12,7 @@ function Filter(props){
                 <h5 className="section">{section}</h5>
                 <img className="plus" src="/img/Vector.png" onClick={openFilter}></img>
             </div>
-            <div className="Body" style={filterStatus ? {height:"4rem",opacity:"1"} : {height:"0",opacity:"0"}}>
+            <div className="Body" style={filterStatus ? {height:"4rem"} : {height:"0"}}>
                 {children}
             </div>
         </div>
