@@ -31,7 +31,6 @@ function Main() {
                         {dormCard}
                     </div>
                 </div>
-                
             </div>
         </div>
     )
