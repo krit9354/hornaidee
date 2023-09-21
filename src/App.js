@@ -13,12 +13,17 @@ import { useEffect, useState } from "react";
     
 function Main() {
     const [dormlist, setdormlist] = useState([]);
+    const [ filterStatus , setFilterStatus] = useState(false);
+
+
+    const openFilter = () => setFilterStatus(!filterStatus)
 
     useEffect(() => {
         axios.get("http://localhost:3001/").then((response) =>{
-            setdormlist(response.data);
+        setdormlist(response.data);
+        console.log("update");
         });
-    })
+    },[]);
 
     
     const dormCard = dormlist.map((dorm,index) => {
@@ -36,7 +41,7 @@ function Main() {
                 </div>
                 <div className="content">
                     <div className="filter">
-                        <Filter section="price"></Filter>
+                        <Filter section="price" onclick={openFilter}></Filter>
                         <Filter section="ระยะทาง"></Filter>
                     </div>
                     <div className="grid">
@@ -49,9 +54,3 @@ function Main() {
 }
 
 export default Main;
-
-/* <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card> */
