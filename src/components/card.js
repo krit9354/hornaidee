@@ -1,13 +1,13 @@
 import "./card.scoped.css"
 function Card(props){
-    const {url,dorm_name,price,distance} = props
+    const {dorm} = props
     return(
         <div className="card">
-            <img src={url}/>
+            <img src={dorm.url}/>
             <div className="info">
-                <h6 className="Dorm_name">{dorm_name}</h6>
-                <p className="price_info">{price}บาท/เดือน</p>
-                <p className="Distance">ระยะห่างจากมอ:{distance}ม.</p>
+                <h6 className="Dorm_name">{dorm.dorm_name}</h6>
+                <p className="price_info">{dorm.price}บาท/เดือน</p>
+                <p className="Distance">ระยะห่างจากมอ:{dorm.distance}ม.</p>
             </div>
         </div>
     )

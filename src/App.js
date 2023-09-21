@@ -4,7 +4,27 @@ import Card from "./components/card";
 import Navbar from "./components/nav";
 import Filter from "./components/filter"
 import Bt2 from "./components/bt2";
+
+const dorms = [
+    {
+        url:"https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1",
+        dorm_name: "hello house",
+        price: 5000,
+        distance: 100,
+    },
+    {
+        url:"https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1",
+        dorm_name: "ulike apartment",
+        price: 5500,
+        distance: 234,
+    }
+]
+
 function Main() {
+    const dormCard = dorms.map((dorm,index) => {
+        return <Card key={index} dorm={dorm}></Card>
+    })
+
     return(
         <div className="Main">
             <Navbar/>
@@ -20,12 +40,7 @@ function Main() {
                         <Filter section="ระยะทาง"></Filter>
                     </div>
                     <div className="grid">
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
-                        <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+                        {dormCard}
                     </div>
                 </div>
                 
@@ -35,3 +50,9 @@ function Main() {
 }
 
 export default Main;
+
+/* <Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card>
+<Card url="https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1" dorm_name="hello_house" price="5000" distance="100"></Card> */
