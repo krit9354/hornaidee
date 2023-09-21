@@ -1,15 +1,19 @@
 import "./filter.scoped.css"
-
+import { useState } from "react";
 function Filter(props){
-    const {section, onclick} = props
+    const {section, children} = props
+
+    const [ filterStatus , setFilterStatus] = useState(false);
+    const openFilter = () => setFilterStatus(!filterStatus)
+    
     return(
         <div className="filter">
-            <div>
+            <div className="Head">
                 <h5 className="section">{section}</h5>
-                <img className="plus" src="/img/Vector.png" onClick={onclick}></img>
+                <img className="plus" src="/img/Vector.png" onClick={openFilter}></img>
             </div>
-            <div>
-                
+            <div className="Body" style={filterStatus ? {height:"4rem",opacity:"1"} : {height:"0",opacity:"0"}}>
+                {children}
             </div>
         </div>
     )

@@ -13,16 +13,12 @@ import { useEffect, useState } from "react";
     
 function Main() {
     const [dormlist, setdormlist] = useState([]);
-    const [ filterStatus , setFilterStatus] = useState(false);
-
-
-    const openFilter = () => setFilterStatus(!filterStatus)
-
+    
     useEffect(() => {
         axios.get("http://localhost:3001/").then((response) =>{
         setdormlist(response.data);
         console.log("update");
-        });
+        }).catch((err) =>{console.log(err)});
     },[]);
 
     
@@ -41,8 +37,16 @@ function Main() {
                 </div>
                 <div className="content">
                     <div className="filter">
-                        <Filter section="price" onclick={openFilter}></Filter>
-                        <Filter section="ระยะทาง"></Filter>
+                        <Filter section="price">
+                            <p>1000บาท</p>
+                            <p>2000บาท</p>
+                            <p>3000บาท</p>
+                        </Filter>
+                        <Filter section="ระยะทาง">
+                            <p>100ม.</p>
+                            <p>200ม.</p>
+                            <p>300ม.</p>
+                        </Filter>
                     </div>
                     <div className="grid">
                         {dormCard}
