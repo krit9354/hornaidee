@@ -51,7 +51,7 @@ function Main() {
     })
 
 
-    const Check = (value,minprice,maxprice) =>{
+    const Check = (minprice,maxprice) =>{
         const url = `/?minprice=${minprice}&maxprice=${maxprice}`
         navi(url)
     }
@@ -69,7 +69,7 @@ function Main() {
                     <div className="filter">
                         <Filter section="price">
                             <p><input type="checkbox"/> 3000-4000บาท</p>
-                            <p><input type="checkbox" checked={checkStatus.price["4000-5000"]} onChange={()=>Check(4000,5000)}/> 4000-5000บาท</p>
+                            <p><input type="checkbox"  onChange={()=>Check(4000,5000)}/> 4000-5000บาท</p>
                             <p><input type="checkbox"/> 5000-6000บาท</p>
                         </Filter>
                         <Filter section="ระยะทาง">
