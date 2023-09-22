@@ -6,8 +6,10 @@ import Filter from "./components/filter"
 import Bt2 from "./components/bt2";
 import dorms from "./data/dorms";
 import axios from "axios";
+import Choice from "./components/choice";
 import { useEffect, useState,useMemo } from "react";
 import { useNavigate,useLocation } from "react-router";
+
 
 
 function useQuery() {
@@ -51,8 +53,9 @@ function Main() {
     })
 
 
-    const Check = (minprice,maxprice) =>{
-        const url = `/?minprice=${minprice}&maxprice=${maxprice}`
+    const Check = (Price,Distance) =>{
+        const url = `/?pice_range=${Price}&distance_range=${Distance}`
+        console.log(url)
         navi(url)
     }
 
@@ -63,20 +66,25 @@ function Main() {
             <div className="container">
                 <div className="search">
                     <input type="text"/>
-                    <Bt1 text="search"></Bt1>
+                    <Bt1>search</Bt1>
                 </div>
                 <div className="content">
                     <div className="filter">
                         <Filter section="price">
-                            <p><input type="checkbox"/> 3000-4000บาท</p>
-                            <p><input type="checkbox"  onChange={()=>Check(4000,5000)}/> 4000-5000บาท</p>
-                            <p><input type="checkbox"/> 5000-6000บาท</p>
+                            <Choice Check={Check} price="3000-4000">3,000-4,000 บาท</Choice>
+                            <Choice Check={Check} price="4000-5000">4,000-5,000 บาท</Choice>
+                            <Choice Check={Check} price="5000-6000">5,000-6,000 บาท</Choice>
                         </Filter>
                         <Filter section="ระยะทาง">
-                            <p><input type="checkbox"/> 100ม.</p>
-                            <p><input type="checkbox"/> 200ม.</p>
-                            <p><input type="checkbox"/> 300ม.</p>
+                            <Choice Check={Check} distance="0-100">0-100ม.</Choice>
+                            <Choice Check={Check} distance="100-200">100-200ม.</Choice>
+                            <Choice Check={Check} distance="200-300">200-300ม.</Choice>
                         </Filter>
+                        <button className="btn-filter">
+                            <img src="/img/search.png" style={{width:"30px",marginRight:"5px"}}/>
+                            Filter
+                            <img src="/img/search.png" style={{width:"30px",opacity:"0"}}/>
+                            </button>
                     </div>
                     <div className="grid">
                         {dormCard}

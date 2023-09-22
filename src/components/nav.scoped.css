@@ -17,6 +17,8 @@
 }
 .right_nav{
     margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .line{
@@ -25,6 +27,7 @@
     background-color: rgba(160, 133, 91, 1);
 }
 
-.left_nav *{
-    margin-right: 10px;
+.right_nav *{
+    margin-right: 20px;
 }
+

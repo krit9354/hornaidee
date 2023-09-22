@@ -3,7 +3,7 @@
     border: 1px black solid;
     border-radius: 12px;
     display: flex;
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 10px;
     flex-direction: column;
 }
@@ -15,20 +15,21 @@
 }
 
 .section{
-    font-size: 24px;
+    font-size: 20px;
     color: rgba(56, 71, 11, 1);
 }
 
 .plus{
     margin-left: auto;
-    width: 2rem;
-    height: 2rem;
+    width: 20px;
+    height: 20px;
 }
 
 .Head{
     display: flex;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
 }
 
 .Body{

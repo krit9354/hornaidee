@@ -8,12 +8,13 @@ function Navbar(){
             <div className="container">
                 <div className="left_nav">
                     <h1>band logo</h1>
-                    <div className="line"></div>
-                    <p>chat</p>
+                    
                 </div>
                 <div className="right_nav">
-                    <Bt1 text="login"></Bt1>
-                    <Bt2 text="register"></Bt2>
+                    <p>chat</p>
+                    <div className="line"></div>
+                    <Bt1>login</Bt1>
+                    <Bt2>register</Bt2>
                 </div>
             </div>
         </div>
