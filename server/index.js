@@ -15,8 +15,8 @@ const db = mysql.createConnection({
 
 app.post("/",(req, res)=>{
   console.log(req.body)
-  const {minprice,maxprice} = req.body
-  if (minprice === null || maxprice === null){
+  const {price_range,distance_range} = req.body
+  if (price_range === null || distance_range === null){
     db.query("SELECT* FROM dorm_detail", (err, result) => {
       if (err) {
         console.log(err);

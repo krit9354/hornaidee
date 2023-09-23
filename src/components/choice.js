@@ -1,4 +1,4 @@
-import "./choice.scoped.css"
+
 function Choice(props){
     const {children,Check,price,distance} = props
     return(

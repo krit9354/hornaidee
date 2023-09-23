@@ -20,7 +20,7 @@ function useQuery() {
     
 function Main() {
     const [dormlist, setdormlist] = useState([]);
-    const [checkStatus, setcheckStatus] = useState({
+    let checkStatus={
         price:{
             "3000-4000":false,
             "4000-5000":false,
@@ -31,7 +31,7 @@ function Main() {
             "200-300":false,
             "300-400":false,
         }
-});
+    };
     const navi =  useNavigate()
     const query = useQuery()
     const location = useLocation()
@@ -39,8 +39,8 @@ function Main() {
     useEffect(() => {
         const url = 'http://localhost:3001/'
         axios.post(url,{
-            minprice:parseInt(query.get("minprice")),
-            maxprice:parseInt(query.get("maxprice"))
+            price_range:parseInt(query.get("price_range")),
+            distance_range:parseInt(query.get("distance_range"))
         }).then((response) =>{
         setdormlist(response.data);
         console.log("update");
@@ -54,10 +54,23 @@ function Main() {
 
 
     const Check = (Price,Distance) =>{
-        const url = `/?pice_range=${Price}&distance_range=${Distance}`
-        console.log(url)
-        navi(url)
+        Price ? checkStatus.price[Price] = !checkStatus.price[Price]:checkStatus.price[Price] = checkStatus.price[Price]
+        Distance ? checkStatus.distance[Distance] = !checkStatus.distance[Distance]:checkStatus.distance[Distance] = checkStatus.distance[Distance]
+    };
+
+    const clickFilter = () =>{
+        let price_range = ""
+        let distance_range = ""
+        for (let [key, value] of Object.entries(checkStatus.price)) {
+            if(value){price_range+=key+','}
+        }
+        for (let [key, value] of Object.entries(checkStatus.distance)) {
+            if(value){distance_range+=key+','}
+        }
+        const url_filter = `/?price_range=${price_range}&distance_range=${distance_range}`
+        navi(url_filter)
     }
+    
 
     return(
         <div className="Main">
@@ -80,13 +93,13 @@ function Main() {
                             <Choice Check={Check} distance="100-200">100-200ม.</Choice>
                             <Choice Check={Check} distance="200-300">200-300ม.</Choice>
                         </Filter>
-                        <button className="btn-filter">
+                        <button className="btn-filter" onClick={clickFilter}>
                             <img src="/img/search.png" style={{width:"30px",marginRight:"5px"}}/>
                             Filter
                             <img src="/img/search.png" style={{width:"30px",opacity:"0"}}/>
                             </button>
                     </div>
-                    <div className="grid">
+                    <div className="grid w-full">
                         {dormCard}
                     </div>
                 </div>
