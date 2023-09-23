@@ -47,7 +47,7 @@ function Main() {
         }).catch((err) =>{console.log(err)});
     },[location]);
 
-    
+
     const dormCard = dormlist.map((dorm,index) => {
         return <Card key={index} dorm={dorm}></Card>
     })
