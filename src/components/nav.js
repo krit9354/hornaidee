@@ -2,19 +2,20 @@
 import "./nav.scoped.css"
 import Bt1 from "./bt1";
 import Bt2 from "./bt2";
+import { Link } from "react-router-dom";
 function Navbar(){
     return(
-        <div className="nav w-full">
+        <div className="nav w-full bg-cream">
             <div className="container h-full items-center m-auto flex ">
                 <div className="left_nav items-center">
-                    <h1>band logo</h1>
+                    <Link to="/"><h1>band logo</h1></Link>
                     
                 </div>
                 <div className="right_nav items-center">
-                    <p>chat</p>
+                    <Link to="chat"><p>chat</p></Link>
                     <div className="line"></div>
-                    <Bt1>login</Bt1>
-                    <Bt2>register</Bt2>
+                    <Link to="login"><Bt1>login</Bt1></Link>
+                    <Link to="register"><Bt2>register</Bt2></Link>
                 </div>
             </div>
         </div>
