@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/register'
 import Detail from './pages/detaidom'
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
+import Chat from './pages/chat';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +33,12 @@ const router = createBrowserRouter([
       <Detail />
     ),
   },
+  {
+    path: "chat",
+    element: (
+      <Chat />
+    ),
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

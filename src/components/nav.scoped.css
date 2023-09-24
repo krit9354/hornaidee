@@ -1,6 +1,5 @@
 .nav{
-    height: 85px;
-    background-color: rgba(249, 246, 242, 1);
+    height: 75px;
 }
 .container{
     width: 1050px;
@@ -22,7 +21,7 @@
     background-color: rgba(160, 133, 91, 1);
 }
 
-.right_nav *{
-    margin-right: 20px;
+.right_nav *:not(:last-child){
+    margin-right: 10px;
 }
 

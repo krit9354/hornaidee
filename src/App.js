@@ -20,6 +20,7 @@ function useQuery() {
     
 function Main() {
     const [dormlist, setdormlist] = useState([]);
+    const [ searchFilter , setsearchFilter] = useState('')
     let checkStatus={
         price:{
             "3000-4000":false,
@@ -47,8 +48,10 @@ function Main() {
         }).catch((err) =>{console.log(err)});
     },[location]);
 
-    
-    const dormCard = dormlist.map((dorm,index) => {
+
+    const dormCard = dormlist.filter((dorm) =>{
+        return dorm.dorm_name.includes(searchFilter);
+    }).map((dorm,index) => {
         return <Card key={index} dorm={dorm}></Card>
     })
 
@@ -75,10 +78,14 @@ function Main() {
     return(
         <div className="Main">
             <Navbar/>
-            <img src="/img/banner (1).svg" alt="banner" className="banner"/>
+            <img src="/img/banner (1).svg"  className="banner mb-4"/>
             <div className="container">
                 <div className="search">
-                    <input type="text"/>
+                    <input 
+                        type="text"
+                        value={searchFilter}
+                        onChange={(event) => setsearchFilter(event.target.value)}
+                    />
                     <Bt1>search</Bt1>
                 </div>
                 <div className="content">
