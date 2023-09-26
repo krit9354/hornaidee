@@ -85,12 +85,12 @@ function Register() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
+            alredy have a member?{" "}
             <a
               href="#"
               className="font-semibold leading-6 text-[#7C913D] hover:text-[#def59a]"
             >
-              register
+              login
             </a>
           </p>
         </div>
