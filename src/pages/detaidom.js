@@ -2,6 +2,7 @@ import "./detaidom.scoped.css";
 import Nav from "../components/nav";
 import { Typography, Rating } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -44,7 +45,8 @@ function detaidom() {
             <p className="text">เพิ่มเติม : ร้านข้าวใต้หออร่อยมาก</p>
             <div className="chat-button">
               <a href="" className="bt">
-                chat
+                <QuestionAnswerIcon />
+                <p>chat</p>
               </a>
             </div>
           </div>
@@ -67,6 +69,7 @@ function detaidom() {
                   id="outlined-basic"
                   placeholder="review..."
                   variant="outlined"
+                  defaultValue="เยียมมาฟๆๆ"
                 />
               </Box>
             </div>
