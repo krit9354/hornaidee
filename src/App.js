@@ -22,6 +22,8 @@ function useQuery() {
 function Main() {
     const [dormlist, setdormlist] = useState([]);
     const [ searchFilter , setsearchFilter] = useState('')
+    const [ dormCard , setDormCard] = useState('')
+    const [ searchClick , setSearchClick ] = useState(0)
     let checkStatus={
         price:{
             "3000-4000":false,
@@ -49,12 +51,16 @@ function Main() {
         }).catch((err) =>{console.log(err)});
     },[location]);
 
-
-    const dormCard = dormlist.filter((dorm) =>{
-        return dorm.dorm_name.includes(searchFilter);
-    }).map((dorm,index) => {
-        return <Card key={index} dorm={dorm}></Card>
-    })
+    // dorm card
+    useEffect(() => {
+         setDormCard(dormlist.filter((dorm) =>{
+            return dorm.dorm_name.includes(searchFilter);
+        }).map((dorm,index) => {
+            return <Card key={index} dorm={dorm}></Card>
+        }))
+        console.log("update card"+ searchClick);
+    },[location,dormlist,searchClick])
+    
 
 
     const Check = (Price,Distance) =>{
@@ -75,7 +81,6 @@ function Main() {
         navi(url_filter)
     }
     
-
     return(
         <div className="Main">
             <Navbar/>
@@ -83,11 +88,13 @@ function Main() {
             <div className="container">
                 <div className="search">
                     <input 
+                        className="mr-2"
                         type="text"
                         value={searchFilter}
                         onChange={(event) => setsearchFilter(event.target.value)}
                         placeholder="dorm name...."
                     />
+                    <div onClick={()=>{setSearchClick(searchClick+1)}}><Bt1>search</Bt1></div>
                 </div>
                 <div className="content">
                     <div className="filter">

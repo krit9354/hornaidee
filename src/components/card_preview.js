@@ -6,7 +6,7 @@ function Card_previwe(props){
         <div className="card_preview">
             <div className="image_preview relative">
                 <img clas src={dorm.url}/>
-                <div className="absolute right-0 bottom-0"><Bt1>แก้ไข</Bt1></div>
+                <div className="absolute right-1 bottom-1"><Bt1>แก้ไข</Bt1></div>
             </div>
             <div className="info">
                 <h6 className="Dorm_name">{dorm.dorm_name}</h6>
