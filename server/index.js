@@ -12,6 +12,11 @@ const db = mysql.createConnection({
   password: "",
   database: "hornai_d",
 });
+app.get("/",(req,res) =>{
+  db.query("SELECT* FROM dorm_detail", (err, result) => {
+    res.send(result);
+  }
+)})
 
 app.post("/",(req, res)=>{
   console.log(req.body)

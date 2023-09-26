@@ -21,6 +21,12 @@ function Chat(){
                         <PersonCard></PersonCard>
                         <PersonCard></PersonCard>
                         <PersonCard></PersonCard>
+                        <PersonCard></PersonCard> 
+                        <PersonCard></PersonCard>
+                        <PersonCard></PersonCard>
+                        <PersonCard></PersonCard>
+                        <PersonCard></PersonCard>
+                        <PersonCard></PersonCard>
                     </div>
                 </div>
                 <div className="chat w-2/3 ">
@@ -33,11 +39,23 @@ function Chat(){
                         <Message>hello</Message>
                         <MessageOwn>hello</MessageOwn>
                         <Message>hello</Message>
-                        <MessageOwn>hello</MessageOwn>
+                        <MessageOwn>kuy</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>sdfsdf</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>sdfdsfsss</MessageOwn>
                         <Message>hello</Message>
                         <MessageOwn>hello</MessageOwn>
                         <Message>hello</Message>
                         <MessageOwn>hello</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>hello</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>kuy</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>sdfsdf</MessageOwn>
+                        <Message>hello</Message>
+                        <MessageOwn>sdfdsfsss</MessageOwn>
                     </div>
                     <div className="input flex border-black border-solid border-t h-16">
                         <input className="h-16 p-5 w-full" type="text" placeholder="Type somthing..." />

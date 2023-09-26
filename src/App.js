@@ -9,6 +9,7 @@ import axios from "axios";
 import Choice from "./components/choice";
 import { useEffect, useState,useMemo } from "react";
 import { useNavigate,useLocation } from "react-router";
+import Help from "./components/help";
 
 
 
@@ -85,8 +86,8 @@ function Main() {
                         type="text"
                         value={searchFilter}
                         onChange={(event) => setsearchFilter(event.target.value)}
+                        placeholder="dorm name...."
                     />
-                    <Bt1>search</Bt1>
                 </div>
                 <div className="content">
                     <div className="filter">
@@ -111,6 +112,7 @@ function Main() {
                     </div>
                 </div>
             </div>
+            <Help></Help>
         </div>
     )
 }

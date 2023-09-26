@@ -8,6 +8,7 @@ import Register from './pages/register'
 import Detail from './pages/detaidom'
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import Chat from './pages/chat';
+import Manage_detail from './pages/manage_detail';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
     path: "chat",
     element: (
       <Chat />
+    ),
+  },
+  {
+    path: "manage",
+    element: (
+      <Manage_detail></Manage_detail>
     ),
   }
 ])

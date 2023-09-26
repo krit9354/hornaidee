@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Navbar(){
     return(
         <div className="nav w-full bg-cream">
-            <div className="container h-full items-center m-auto flex ">
+            <div className="container h-full items-center m-auto flex">
                 <div className="left_nav items-center">
                     <Link to="/"><h1>band logo</h1></Link>
                     
