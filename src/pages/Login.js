@@ -1,8 +1,8 @@
 import "./Login.scoped.css";
 function Register() {
   return (
-    <body className=" h-screen flex justify-center">
-      <div className="bg-white flex flex-col px-6 py-12 lg:px-20  justify-center   border-black border-solid my-12 lg:my-56  border-2 rounded-md">
+    <body className=" h-screen flex justify-center items-center">
+      <div className="bg-white flex flex-col px-6 py-12 lg:px-20  justify-center border-black border-solid my-12 lg:my-54  border-2 rounded-md">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
@@ -25,7 +25,7 @@ function Register() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                  className="p-3 block w-full rounded-md border-0 py-1.5 text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
