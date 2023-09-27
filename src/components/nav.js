@@ -8,7 +8,7 @@ function Navbar(){
         <div className="nav w-full bg-cream">
             <div className="container h-full items-center m-auto flex">
                 <div className="left_nav items-center">
-                    <Link to="/"><h1>band logo</h1></Link>
+                    <Link to="/"><img className=" w-36" src="./img/logo_hornaid.png"/></Link>
                     
                 </div>
                 <div className="right_nav items-center">
