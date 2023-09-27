@@ -1,6 +1,7 @@
 import "./Login.scoped.css";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 function Register() {
   return (
     <body className=" h-screen flex justify-center items-center">
@@ -74,12 +75,12 @@ function Register() {
 
                   <p className="mt-10 text-center text-sm text-gray-500">
                     Not a member?{" "}
-                    <a
-                      href="#"
+                    <Link
+                      to="/register"
                       className="font-semibold leading-6 text-[#7C913D] hover:text-[#def59a]"
                     >
                       register
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>
