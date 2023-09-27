@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  margin: 0;
 }
 
 .background {
@@ -85,4 +84,16 @@ img {
 .grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.main_detail > div:not(:nth-last-child(2)):not(:last-child){
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-bottom: rgb(187, 187, 187) solid 1px;
+}
+
+
+.facility{
+  row-gap:10px ;
 }

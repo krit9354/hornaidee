@@ -10,6 +10,7 @@ import Choice from "./components/choice";
 import { useEffect, useState,useMemo } from "react";
 import { useNavigate,useLocation } from "react-router";
 import Help from "./components/help";
+import Footer from "./components/footer";
 
 
 
@@ -120,6 +121,7 @@ function Main() {
                 </div>
             </div>
             <Help></Help>
+            <Footer></Footer>
         </div>
     )
 }
