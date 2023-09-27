@@ -28,13 +28,11 @@ function Manage_detail() {
                 <div className="bg-white p-4 rounded-xl border border-solid border-black">
                     {/* donrm name */}
                     <div className="dorm_name mb-6">
-                        <TextField
-                        id="outlined-required"
-                        defaultValue="Hello World"
-                        size="small"
-                        />
+                        <div className="topic text-old_green text-2xl mb-4">ชื่อหอพัก</div>
+                        <div className="input flex">
+                            <input className="input_text" defaultValue={distance} type="text" />
                             <Bt1>แก้ไข</Bt1>
-                        
+                        </div>          
                     </div>
 
                     {/* price */}
