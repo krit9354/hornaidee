@@ -12,6 +12,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { AcUnit,Tv,Kitchen,PedalBike,AirportShuttle,Pool,FitnessCenter,LocalLaundryService,Shower } from "@mui/icons-material"
 import { Key,CreditCard,Videocam,Security,Fingerprint } from "@mui/icons-material"
+import Footer from "../components/footer";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -184,6 +185,7 @@ function detaidom() {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </body>
   );
 }

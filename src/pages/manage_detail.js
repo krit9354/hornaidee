@@ -8,6 +8,7 @@ import Navbar from "../components/nav"
 import Safety_choice from "../components/safety_choice"
 import "./manage_detail.scoped.css"
 import TextField from '@mui/material/TextField';
+import Footer from "../components/footer"
 function Manage_detail() {
     const dorm = {
         dorm_name: "hello world",
@@ -101,6 +102,7 @@ function Manage_detail() {
                 </div>
             </div>
             <Help></Help>
+            <Footer></Footer>
         </div>
     )
 }
