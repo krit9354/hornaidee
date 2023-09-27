@@ -46,7 +46,7 @@ function detaidom() {
             {/*  */}
           </div>
           <div className="register_box">
-            <h2 className="clo">หอประกายดาว</h2>
+            <h2 className="clo text-2xl font-bold">หอประกายดาว</h2>
             <p className="text">ราคาค่าเช่าหอต่อเดือนอยู่ระหว่าง : 3000-6000</p>
             <p className="text">ขนาดของห้อง : 29-34 ตารางเมตร</p>
             <p className="text">ระยะทางไปมอ : 500 เมตร</p>

@@ -7,7 +7,7 @@ import Help from "../components/help"
 import Navbar from "../components/nav"
 import Safety_choice from "../components/safety_choice"
 import "./manage_detail.scoped.css"
-
+import TextField from '@mui/material/TextField';
 function Manage_detail() {
     const dorm = {
         dorm_name: "hello world",
@@ -28,11 +28,13 @@ function Manage_detail() {
                 <div className="bg-white p-4 rounded-xl border border-solid border-black">
                     {/* donrm name */}
                     <div className="dorm_name mb-6">
-                        <div className="topic text-old_green text-2xl mb-4">ชื่อหอพัก</div>
-                        <div className="input flex">
-                            <input className="input_text" defaultValue={dorm_name} type="text" />
+                        <TextField
+                        id="outlined-required"
+                        defaultValue="Hello World"
+                        size="small"
+                        />
                             <Bt1>แก้ไข</Bt1>
-                        </div>
+                        
                     </div>
 
                     {/* price */}
