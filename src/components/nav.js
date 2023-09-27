@@ -12,10 +12,10 @@ function Navbar(){
                     
                 </div>
                 <div className="right_nav items-center">
-                    <Link to="chat"><p>chat</p></Link>
+                    <Link to="/chat"><p>chat</p></Link>
                     <div className="line"></div>
-                    <Link to="login"><Bt1>login</Bt1></Link>
-                    <Link to="register"><Bt2>register</Bt2></Link>
+                    <Link to="/login"><Bt1>login</Bt1></Link>
+                    <Link to="/register"><Bt2>register</Bt2></Link>
                 </div>
             </div>
         </div>
