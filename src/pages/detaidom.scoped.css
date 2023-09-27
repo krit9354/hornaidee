@@ -81,3 +81,8 @@ img {
 .clo {
   color: rgba(124, 145, 61, 1);
 }
+
+.grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
