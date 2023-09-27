@@ -10,7 +10,7 @@ function Card_previwe(props){
             </div>
             <div className="info">
                 <h6 className="Dorm_name">{dorm.dorm_name}</h6>
-                <p className="price_info">{dorm.price} บาท/เดือน</p>
+                <p className="price_info">{dorm.price[0]} - {dorm.price[1]} บาท/เดือน</p>
                 <p className="Distance">ระยะห่างจากมอ:{dorm.distance} ม.</p>
             </div>
         </div>

@@ -114,7 +114,7 @@ function Main() {
                             <img src="/img/search.png" style={{width:"30px",opacity:"0"}}/>
                             </button>
                     </div>
-                    <div className="grid w-full">
+                    <div className="grid w-full ml-2">
                         {dormCard}
                     </div>
                 </div>
