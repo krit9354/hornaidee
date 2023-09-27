@@ -4,6 +4,10 @@
     align-content: center;
 }
 
+.Main{
+    width: 100%;
+}
+
 .flex{
     display: flex;
 }

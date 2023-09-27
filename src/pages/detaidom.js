@@ -8,6 +8,9 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -26,11 +29,21 @@ function detaidom() {
       <div className="containei">
         <div className="background">
           <div className="card">
-            <img
-              src={
-                "https://th.bing.com/th/id/OIP.HJPHH7ynTGyNaz0t_3esDgAAAA?pid=ImgDet&rs=1"
-              }
-            />
+            {/*  */}
+            <div class="carousel-wrapper flex justify-center">
+            <Carousel width={"100%"} infiniteLoop useKeyboardArrows autoPlay className="flex flex-col items-center">
+                <div>
+                    <img className="h-1/2" src="https://bcdn.renthub.in.th/listing_picture/201906/20190629/6ioa2uET8wASLvhoqhuG.jpg?class=moptimized" />
+                </div>
+                <div>
+                    <img className="h-1/2" src="https://www.hongpak.in.th/media/rooms/photos/15/1225/4_2999.jpg" />
+                </div>
+                <div>
+                    <img className="h-1" src="https://udo.oop.cmu.ac.th/img_dorm/dorm_pic/review/m1m2/bedroom.jpg" />
+                </div>
+            </Carousel>
+        </div>
+            {/*  */}
           </div>
           <div className="register_box">
             <h2 className="clo">หอประกายดาว</h2>
