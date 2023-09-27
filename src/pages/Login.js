@@ -2,8 +2,7 @@ import "./Login.scoped.css";
 function Register() {
   return (
     <body className=" h-screen flex justify-center items-center">
-      <div className="bg-white flex flex-col px-6 py-12 lg:px-20  justify-center border-black border-solid my-12 lg:my-54  border-2 rounded-md">\
-      
+      <div className="bg-white flex flex-col px-6 py-12 lg:px-20  justify-center border-black border-solid my-12 lg:my-54  border-2 rounded-md">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
