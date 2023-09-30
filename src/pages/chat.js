@@ -32,8 +32,8 @@ function Chat(){
                 <div className="chat w-2/3 ">
                     <div className="name text-black font-normal bg-brown h-14 flex items-center p-4 text-3xl">Ulike apartment</div>
                     <div className="chat overflow-scroll">
-                        <Message>hello</Message>
-                        <MessageOwn>hello</MessageOwn>
+                        <Message>ldkfjg;ldkfj;lkj;lkj;lkj;ljflak;sdjflk;sja;lkfjsdlkafjlsdak;jf;lksdajfl;sjalf;kjsadl;kfjslak;djfl;askdjflj</Message>
+                        <MessageOwn>ae'gisdpoipoasifpsoidfoiddfdfdffoisadposaidfasoiufoiuoiewuroiuewroiu</MessageOwn>
                         <Message>hello</Message>
                         <MessageOwn>hello</MessageOwn>
                         <Message>hello</Message>

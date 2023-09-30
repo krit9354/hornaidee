@@ -18,6 +18,19 @@ app.get("/",(req,res) =>{
   }
 )})
 
+app.get("/:dormID",(req,res) => {
+  db.query(`SELECT* FROM dorm_detail
+            JOIN facility ON dorm_detail.id = facility.id
+            JOIN safety ON dorm_detail.id = safety.id
+            WHERE dorm_detail.id = ?`,[req.params.dormID], (err, result) => {
+    if(typeof(result[0]) == "undefined"){
+      res.status(404).send();
+    }else{
+      res.send(result[0]);
+    }
+  }
+)})
+
 app.post("/",(req, res)=>{
   console.log(req.body)
   const {price_range,distance_range} = req.body

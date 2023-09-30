@@ -12,7 +12,7 @@ function Help(){
     }
     return (
         <div>
-            <div  className="fixed right-6 bottom-20 box-border" style={Clickhelp[1]}>
+            <div  className="fixed right-6 bottom-20 box-border transition-all" style={Clickhelp[1]}>
                 <div className="help_box h-full w-full border-2 border-solid border-black rounded-lg relative right-16 bg-white p-3">
                     <p className="mb-1">Do you need help?</p>
                     <textarea placeholder="type someting ..." className="p-2 border border-solid border-gray-500 rounded-lg h-3/5 w-full resize-none">

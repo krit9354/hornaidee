@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Login from './pages/Login'
 import Register from './pages/register'
-import Detail from './pages/detaidom'
+import Detaildorm from './pages/detaidom'
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import Chat from './pages/chat';
 import Manage_detail from './pages/manage_detail';
+import Error from './pages/error';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,9 +30,9 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "detail",
+    path: "detail/:dormID",
     element: (
-      <Detail />
+      <Detaildorm />
     ),
   },
   {
@@ -44,6 +45,12 @@ const router = createBrowserRouter([
     path: "manage",
     element: (
       <Manage_detail></Manage_detail>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <Error></Error>
     ),
   }
 ])

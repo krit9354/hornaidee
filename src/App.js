@@ -11,6 +11,8 @@ import { useEffect, useState,useMemo } from "react";
 import { useNavigate,useLocation } from "react-router";
 import Help from "./components/help";
 import Footer from "./components/footer";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -25,6 +27,7 @@ function Main() {
     const [ searchFilter , setsearchFilter] = useState('')
     const [ dormCard , setDormCard] = useState('')
     const [ searchClick , setSearchClick ] = useState(0)
+    const [value, setValue] = useState([20, 37]);
     let checkStatus={
         price:{
             "3000-4000":false,
@@ -43,12 +46,8 @@ function Main() {
 
     useEffect(() => {
         const url = 'http://localhost:3001/'
-        axios.post(url,{
-            price_range:parseInt(query.get("price_range")),
-            distance_range:parseInt(query.get("distance_range"))
-        }).then((response) =>{
+        axios.get(url).then((response) =>{
         setdormlist(response.data);
-        console.log("update");
         }).catch((err) =>{console.log(err)});
     },[location]);
 
@@ -57,7 +56,9 @@ function Main() {
          setDormCard(dormlist.filter((dorm) =>{
             return dorm.dorm_name.includes(searchFilter);
         }).map((dorm,index) => {
-            return <Card key={index} dorm={dorm}></Card>
+            return <Link key={index} to={`/detail/${dorm.id}`}>
+                <Card dorm={dorm}></Card>
+            </Link>
         }))
         console.log("update card"+ searchClick);
     },[location,dormlist,searchClick])
@@ -82,6 +83,10 @@ function Main() {
         navi(url_filter)
     }
     
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return(
         <div className="Main">
             <Navbar/>
@@ -100,6 +105,7 @@ function Main() {
                 <div className="content">
                     <div className="filter">
                         <Filter section="price">
+                        
                             <Choice Check={Check} price="3000-4000">3,000-4,000 บาท</Choice>
                             <Choice Check={Check} price="4000-5000">4,000-5,000 บาท</Choice>
                             <Choice Check={Check} price="5000-6000">5,000-6,000 บาท</Choice>
