@@ -93,15 +93,6 @@ function Detaildorm() {
             </div>
             <SafetyDetail dorm={dormData}/>
             
-            {/* <p className="text">ราคาค่าเช่าหอต่อเดือนอยู่ระหว่าง : 3000-6000</p>
-            <p className="text">ขนาดของห้อง : 29-34 ตารางเมตร</p>
-            <p className="text">ระยะทางไปมอ : 500 เมตร</p>
-            <p className="text">
-              สิ่งอำนวยความสะดวก : แอร์ ตู้เย็น เครื่องทำน้ำอุ่น
-            </p>
-            <p className="text">ความปลอดภัย : รปภ. คีย์การ์ด</p>
-            <p className="text">ที่อยู่ : อยู่ภายในใจ</p>
-            <p className="text">เพิ่มเติม : ร้านข้าวใต้หออร่อยมาก</p> */}
 
             <div className="chat-button">
               <a href="" className="bt">

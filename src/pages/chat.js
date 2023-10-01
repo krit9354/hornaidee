@@ -5,6 +5,9 @@ import Navbar from "../components/nav";
 import PersonCard from "../components/person_card";
 import "./chat.scoped.css"
 function Chat(){
+    const student_id = 1;
+    const dorm_id = 2;
+
     return(
         <div className="h-screen box-border">
             <Navbar></Navbar>
