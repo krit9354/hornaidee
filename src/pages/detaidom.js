@@ -1,5 +1,4 @@
 import "./detaidom.scoped.css";
-
 import { Typography, Rating } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -10,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-
 import Footer from "../components/footer";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/nav";
@@ -18,36 +16,43 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import FacilityDetail from "../components/facility_detail";
 import SafetyDetail from "../components/safety_detail";
+import Reviewbox from "../components/reviewbox";
+import Writereview from "../components/Writereviwe";
 
 function Detaildorm() {
   const location = useLocation();
-  const {dormID} = useParams();
-  const [dormData , setDormData] = useState({});
+  const { dormID } = useParams();
+  const [dormData, setDormData] = useState({});
   const navi = useNavigate();
   useEffect(() => {
-    const url = 'http://localhost:3001/'+dormID
-    axios.get(url).then((response) =>{
-    setDormData(response.data);
-    console.log(JSON.parse(response.data.url));
-    }).catch((err) =>{
-      navi("/error")
-    });
-  },[location]);
+    const url = "http://localhost:3001/" + dormID;
+    axios
+      .get(url)
+      .then((response) => {
+        setDormData(response.data);
+        console.log(JSON.parse(response.data.url));
+      })
+      .catch((err) => {
+        navi("/error");
+      });
+  }, [location]);
 
-  const dormImg = JSON.parse(dormData.url??"[]").map((URL,index) =>{
-    console.log(URL)
-    return(<div className="flex h-full items-center bg-black justify-center" key={index}>
-      <img
-        className=""
-        src= {URL.url}
-      />
-    </div>)
-  })
+  const dormImg = JSON.parse(dormData.url ?? "[]").map((URL, index) => {
+    console.log(URL);
+    return (
+      <div
+        className="flex h-full items-center bg-black justify-center"
+        key={index}
+      >
+        <img className="" src={URL.url} />
+      </div>
+    );
+  });
 
   return (
     <div>
       <header>
-        <Navbar/>
+        <Navbar />
       </header>
       <div className="containei">
         <div className="background">
@@ -64,19 +69,25 @@ function Detaildorm() {
                 {dormImg}
               </Carousel>
             </div>
-
           </div>
           <div className="register_box">
             <h2 className="clo text-2xl font-bold">{dormData.dorm_name}</h2>
             <div className="grid main_detail m-8 p-3 bg-light_gray rounded-xl">
               <div>รายเดือน </div>
-              <div className="justify-end">{dormData.price?dormData.price.toLocaleString('en-US'):dormData.price} บาท</div>
+              <div className="justify-end">
+                {dormData.price
+                  ? dormData.price.toLocaleString("en-US")
+                  : dormData.price}{" "}
+                บาท
+              </div>
               <div>ระยะทางไปมอ</div>
               <div className="justify-end">{dormData.distance} เมตร</div>
               <div>ขนาดของห้อง</div>
               <div className=" justify-end">29-34 ตารางเมตร</div>
               <div className="flex items-end h-8">อินเทอร์เน็ต</div>
-              <div className="flex items-end justify-end h-8">{dormData.wifi} บาท</div>
+              <div className="flex items-end justify-end h-8">
+                {dormData.wifi} บาท
+              </div>
             </div>
 
             {/* address */}
@@ -84,15 +95,16 @@ function Detaildorm() {
             <div className="address">อยู่ภายในใจเสมองับ จุ๊บๆ</div>
 
             {/* Facility */}
-            <div className="mt-8 text-lg clo font-semibold">สิ่งอำนวยความสะดวก</div>
-            <FacilityDetail dorm = {dormData}/>
+            <div className="mt-8 text-lg clo font-semibold">
+              สิ่งอำนวยความสะดวก
+            </div>
+            <FacilityDetail dorm={dormData} />
 
             {/* Safety */}
             <div className="mt-8 text-lg clo font-semibold">
               ระบบความปลอดภัย
             </div>
-            <SafetyDetail dorm={dormData}/>
-            
+            <SafetyDetail dorm={dormData} />
 
             <div className="chat-button">
               <a href="" className="bt">
@@ -104,84 +116,10 @@ function Detaildorm() {
 
           <div className="register_box">
             <h2 className="text-2xl mb-2">review</h2>
-            <div className="box">
-              <Box  sx={{ flexGrow: 1, overflow: "hidden", p: 2 }}>
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid item>
-                    <AccountCircleIcon sx={{ fontSize: 45 }} />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Typography noWrap>dads</Typography>
-                    <Rating size="large" name="simple-controlled" />
-                  </Grid>
-                </Grid>
-                <TextField
-                  size="small"
-                  fullWidth
-                  id="outlined-basic"
-                  placeholder="review..."
-                  variant="outlined"
-                  defaultValue="เยียมมาฟๆๆ"
-                />
-              </Box>
-            </div>
-            <div className="box">
-              <Box sx={{ flexGrow: 1, overflow: "hidden", width: 300, p: 2 }}>
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid item>
-                    <AccountCircleIcon sx={{ fontSize: 45 }} />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Typography noWrap>dads</Typography>
-                    <Rating
-                      size="large"
-                      name="simple-controlled"
-                      value={3}
-                      readOnly
-                    />
-                  </Grid>
-                </Grid>
-                <p>very good!?</p>
-              </Box>
-            </div>
-            <div className="box">
-              <Box sx={{ flexGrow: 1, overflow: "hidden", width: 300, p: 2 }}>
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid item>
-                    <AccountCircleIcon sx={{ fontSize: 45 }} />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Typography noWrap>dads</Typography>
-                    <Rating
-                      size="large"
-                      name="simple-controlled"
-                      value={5}
-                      readOnly
-                    />
-                  </Grid>
-                </Grid>
-                <p>very good!?</p>
-              </Box>
-            </div>
-            <div className="box">
-              <Box sx={{ flexGrow: 1, overflow: "hidden", width: 300, p: 2 }}>
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid item>
-                    <AccountCircleIcon sx={{ fontSize: 45 }} />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Typography noWrap>dads</Typography>
-                    <Rating
-                      size="large"
-                      name="simple-controlled"
-                      value={4}
-                      readOnly
-                    />
-                  </Grid>
-                </Grid>
-                <p>very good!?</p>
-              </Box>
-            </div>
+            <Writereview name="HHJ2520"></Writereview>
+            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
+            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
+            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
           </div>
         </div>
       </div>
