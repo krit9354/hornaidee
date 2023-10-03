@@ -1,61 +1,52 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Login from './pages/Login'
-import Register from './pages/register'
-import Detaildorm from './pages/detaidom'
-import {createBrowserRouter,RouterProvider} from "react-router-dom";
-import Chat from './pages/chat';
-import Manage_detail from './pages/manage_detail';
-import Error from './pages/error';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import Login from "./pages/Login";
+import Register from "./pages/register";
+import Detaildorm from "./pages/detaidom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Chat from "./pages/chat";
+import Manage_detail from "./pages/manage_detail";
+import Error from "./pages/error";
+import Helppage from "./pages/helppage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <App />
-    ),
+    element: <App />,
   },
   {
     path: "Login",
-    element: (
-      <Login />
-    ),
+    element: <Login />,
   },
   {
     path: "Register",
-    element: (
-      <Register />
-    ),
+    element: <Register />,
   },
   {
     path: "detail/:dormID",
-    element: (
-      <Detaildorm />
-    ),
+    element: <Detaildorm />,
   },
   {
     path: "chat",
-    element: (
-      <Chat />
-    ),
+    element: <Chat />,
   },
   {
     path: "manage",
-    element: (
-      <Manage_detail></Manage_detail>
-    ),
+    element: <Manage_detail></Manage_detail>,
   },
   {
     path: "*",
-    element: (
-      <Error></Error>
-    ),
-  }
-])
+    element: <Error></Error>,
+  },
+  {
+    path: "helppage",
+    element: <Helppage></Helppage>,
+  },
+]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
