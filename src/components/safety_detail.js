@@ -10,7 +10,7 @@ function SafetyDetail(props){
     const {dorm} = props
   return (
     <div className="grid facility grid-cols-2 mx-8 mt-2 gap-y-2.5">
-        {dorm.key?<div className="flex">
+        {dorm.dorm_key?<div className="flex">
         <Key></Key>
         <p className="ml-2">กุญแจ</p>
         </div>:undefined}
