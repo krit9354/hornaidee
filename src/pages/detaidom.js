@@ -25,7 +25,6 @@ function Detaildorm() {
   const [dormData, setDormData] = useState({});
   const navi = useNavigate();
   useEffect(() => {
-<<<<<<< HEAD
     const url = 'http://localhost:3001/detail/'+dormID
     axios.get(url).then((response) =>{
     setDormData(response.data);
@@ -43,31 +42,6 @@ function Detaildorm() {
       />
     </div>)
   })
-=======
-    const url = "http://localhost:3001/" + dormID;
-    axios
-      .get(url)
-      .then((response) => {
-        setDormData(response.data);
-        console.log(JSON.parse(response.data.url));
-      })
-      .catch((err) => {
-        navi("/error");
-      });
-  }, [location]);
-
-  const dormImg = JSON.parse(dormData.url ?? "[]").map((URL, index) => {
-    console.log(URL);
-    return (
-      <div
-        className="flex h-full items-center bg-black justify-center"
-        key={index}
-      >
-        <img className="" src={URL.url} />
-      </div>
-    );
-  });
->>>>>>> 0aaabd3ae3416278e9f09faa86f5a7665a3d7d99
 
   return (
     <div>
