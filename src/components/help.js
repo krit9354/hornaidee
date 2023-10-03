@@ -7,7 +7,7 @@ function Help(){
         if (Clickhelp[0]){
             setClickhelp([false,{height:"0px",width:"0px",opacity:"0"}])
         }else{
-            setClickhelp([true,{height:"20%",width:"20%",opacity:"1"}])
+            setClickhelp([true,{height:"200px",width:"20%",opacity:"1"}])
         }
     }
     return (

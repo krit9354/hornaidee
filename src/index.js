@@ -36,20 +36,20 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "chat",
+    path: "chat/:chatID",
     element: (
       <Chat />
     ),
   },
   {
-    path: "manage",
+    path: "manage/:dormID",
     element: (
       <Manage_detail></Manage_detail>
     ),
   },
   {
     path: "*",
-    element: (
+    element: ( 
       <Error></Error>
     ),
   }

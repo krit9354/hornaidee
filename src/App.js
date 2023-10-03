@@ -27,7 +27,6 @@ function Main() {
     const [ searchFilter , setsearchFilter] = useState('')
     const [ dormCard , setDormCard] = useState('')
     const [ searchClick , setSearchClick ] = useState(0)
-    const [value, setValue] = useState([20, 37]);
     let checkStatus={
         price:{
             "3000-4000":false,
@@ -56,7 +55,7 @@ function Main() {
          setDormCard(dormlist.filter((dorm) =>{
             return dorm.dorm_name.includes(searchFilter);
         }).map((dorm,index) => {
-            return <Link key={index} to={`/detail/${dorm.id}`}>
+            return <Link key={index} to={`/detail/${dorm.dorm_id}`}>
                 <Card dorm={dorm}></Card>
             </Link>
         }))
@@ -83,9 +82,6 @@ function Main() {
         navi(url_filter)
     }
     
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
 
     return(
         <div className="Main">
@@ -105,7 +101,6 @@ function Main() {
                 <div className="content">
                     <div className="filter">
                         <Filter section="price">
-                        
                             <Choice Check={Check} price="3000-4000">3,000-4,000 บาท</Choice>
                             <Choice Check={Check} price="4000-5000">4,000-5,000 บาท</Choice>
                             <Choice Check={Check} price="5000-6000">5,000-6,000 บาท</Choice>

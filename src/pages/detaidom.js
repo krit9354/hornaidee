@@ -25,7 +25,7 @@ function Detaildorm() {
   const [dormData , setDormData] = useState({});
   const navi = useNavigate();
   useEffect(() => {
-    const url = 'http://localhost:3001/'+dormID
+    const url = 'http://localhost:3001/detail/'+dormID
     axios.get(url).then((response) =>{
     setDormData(response.data);
     console.log(JSON.parse(response.data.url));
@@ -35,7 +35,6 @@ function Detaildorm() {
   },[location]);
 
   const dormImg = JSON.parse(dormData.url??"[]").map((URL,index) =>{
-    console.log(URL)
     return(<div className="flex h-full items-center bg-black justify-center" key={index}>
       <img
         className=""
@@ -70,8 +69,10 @@ function Detaildorm() {
             <h2 className="clo text-2xl font-bold">{dormData.dorm_name}</h2>
             <div className="grid main_detail m-8 p-3 bg-light_gray rounded-xl">
               <div>รายเดือน </div>
-              <div className="justify-end">{dormData.price?dormData.price.toLocaleString('en-US'):dormData.price} บาท</div>
-              <div>ระยะทางไปมอ</div>
+              <div className="justify-end">
+                {dormData.min_price?dormData.min_price.toLocaleString('en-US'):dormData.min_price} - {dormData.max_price?dormData.max_price.toLocaleString('en-US'):dormData.max_price} บาท
+              </div>
+              <div>ระยะทางไปมอ</div> 
               <div className="justify-end">{dormData.distance} เมตร</div>
               <div>ขนาดของห้อง</div>
               <div className=" justify-end">29-34 ตารางเมตร</div>
@@ -81,7 +82,13 @@ function Detaildorm() {
 
             {/* address */}
             <div className=" text-lg clo font-semibold">ที่อยู่</div>
-            <div className="address">อยู่ภายในใจเสมองับ จุ๊บๆ</div>
+            <div cla  ssName="address">{dormData.address}</div>
+
+            {/* more info */}
+            {dormData.more_detail?()=><div>
+              <div className=" text-lg clo font-semibold">เพิ่มเติม</div>
+              <div className="more_info">{dormData.more_info}</div>
+            </div>:""}
 
             {/* Facility */}
             <div className="mt-8 text-lg clo font-semibold">สิ่งอำนวยความสะดวก</div>
