@@ -179,6 +179,16 @@ app.put("/update", (req, res) => {
 //Login (get) Not done
 
 //Help (get) Not done
+app.get("/ticket", (req, res) => {
+  db.query("SELECT * FROM ticket", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("add user success");
+      res.send(result);
+    }
+  });
+});
 //Help (post) Not done
 
 app.listen(3001, () => {

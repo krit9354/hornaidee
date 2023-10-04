@@ -40,6 +40,10 @@ const router = createBrowserRouter([
     path: "*",
     element: <Error></Error>,
   },
+  {
+    path: "help",
+    element: <Helppage></Helppage>,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

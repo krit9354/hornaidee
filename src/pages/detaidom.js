@@ -74,11 +74,9 @@ function Detaildorm() {
               <div>ระยะทางไปมอ</div> 
               <div className="justify-end">{dormData.distance} เมตร</div>
               <div>ขนาดของห้อง</div>
-              <div className=" justify-end">29-34 ตารางเมตร</div>
+              <div className=" justify-end">{dormData.size} ตารางเมตร</div>
               <div className="flex items-end h-8">อินเทอร์เน็ต</div>
-              <div className="flex items-end justify-end h-8">
-                {dormData.wifi} บาท
-              </div>
+              <div className="flex items-end justify-end h-8">{dormData.wifi} บาท</div>
             </div>
 
             {/* address */}
