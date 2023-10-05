@@ -102,7 +102,6 @@ app.post("/creat_user", (req, res) => {
     );
   });
 });
-
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
