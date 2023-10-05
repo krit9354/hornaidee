@@ -11,11 +11,14 @@ import Footer from "../components/footer"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { dark } from "@mui/material/styles/createPalette"
+import Bt1 from "../components/bt1"
+import Confirm from "../components/confirm"
 
 function Manage_detail() {
     const location = useLocation();
     const {dormID} = useParams();
     const [dormData , setDormData] = useState({});
+    const [ confirmStatus , setConfirmStatus] = useState(false);
     const navi = useNavigate();
 
     useEffect(() => {
@@ -37,6 +40,12 @@ function Manage_detail() {
         alert("edit success")
     }
 
+    const deleteDorm = () => {
+        axios.delete("http://localhost:3001/delete/"+{dormID}).then(()=>{
+            navi("/")
+        })
+    }
+
     const editDorm = (event) => {
         const {name,value} = event.target;
         setDormData((prevDorm) => {
@@ -46,6 +55,7 @@ function Manage_detail() {
             }
         })
     }
+
 
     return (
         <div className="flex items-center flex-col">
@@ -137,10 +147,14 @@ function Manage_detail() {
                             
                         </div>
                     </div>
-                    <div className=" justify-end flex"><Bt2 Width="175px" Height="50px" onChange={updateDorm}>แก้ไข</Bt2></div>
+                    <div className="flex w-96 justify-between">
+                        <Bt2 Width="175px" Height="50px" onChange={()=>{setConfirmStatus(!confirmStatus)}}>ลบ</Bt2>
+                        <Bt2 Width="175px" Height="50px" onChange={updateDorm}>แก้ไข</Bt2>
+                    </div>
                     
                 </div>
             </div>
+            <Confirm status={confirmStatus} setStatus={setConfirmStatus} confirm={deleteDorm}/>
             <Help></Help>
             <Footer></Footer>
         </div>

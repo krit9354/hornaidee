@@ -43,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "help",
     element: <Helppage></Helppage>,
+  },
+  {
+    path: "help/:ticketID",
+    element: <Helppage></Helppage>,
   }
 ]);
 

@@ -4,7 +4,6 @@ import Card from "./components/card";
 import Navbar from "./components/nav";
 import Filter from "./components/filter";
 import Bt2 from "./components/bt2";
-import dorms from "./data/dorms";
 import axios from "axios";
 import Choice from "./components/choice";
 import { useEffect, useState, useMemo } from "react";
@@ -12,11 +11,6 @@ import { useNavigate, useLocation } from "react-router";
 import Help from "./components/help";
 import Footer from "./components/footer";
 import { Link } from "react-router-dom";
-
-function useQuery() {
-  const { search } = useLocation();
-  return useMemo(() => new URLSearchParams(search), [search]);
-}
 
 function Main() {
   const [dormlist, setdormlist] = useState([]);
@@ -93,6 +87,7 @@ function Main() {
     const url_filter = `/?price_range=${price_range}&distance_range=${distance_range}`;
     navi(url_filter);
   };
+  
 
   return (
     <div className="Main">

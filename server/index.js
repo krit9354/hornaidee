@@ -39,13 +39,33 @@ app.get("/detail/:dormID", (req, res) => {
   );
 });
 
+//review (get)
+app.get("/review/:dormID",(req,res) => {
+  db.query(`
+  SELECT review.*,writer.user_name as writer FROM review 
+join user_data as writer on review.writer_id = writer.id
+WHERE  dorm_id = ?;
+  `,
+  [req.params.dormID],
+  (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  }
+  )
+})
+
 // Chat (get chat data)
 app.get("/chat/:chatID", (req, res) => {
   const p = req.params.chatID.split(",");
   db.query(
-    `SELECT * FROM chat 
-  WHERE sender_id = ? or sender_id = ?
-  ORDER BY time ASC;
+    `SELECT chat.*,sender.user_name as sender,receiver.user_name as receiver FROM chat
+    join user_data as sender on chat.sender_id = sender.id
+    join user_data as receiver on chat.receiver_id = receiver.id
+    WHERE sender_id = ? or sender_id = ?
+    ORDER BY time ASC;
   `,
     [p[0], p[1]],
     (err, result) => {
@@ -62,7 +82,10 @@ app.get("/chat/:chatID", (req, res) => {
 app.get("/person/:person", (req, res) => {
   console.log(req.params.person);
   db.query(
-    "SELECT * FROM chat where sender_id = ? or receiver_id = ?;",
+    `SELECT DISTINCT chat.receiver_id,chat.sender_id,sender.user_name as sender,receiver.user_name as receiver FROM chat
+    join user_data as sender on chat.sender_id = sender.id
+    join user_data as receiver on chat.receiver_id = receiver.id
+      WHERE sender_id = 1 or sender_id = 2;`,
     [[req.params.person], [req.params.person]],
     (err, result) => {
       if (err) {
@@ -138,32 +161,9 @@ app.put("/update", (req, res) => {
   WHERE dorm_id = ?;
   `,
     [
-      dorm_name,
-      min,
-      max,
-      distance,
-      url,
-      wifi,
-      address,
-      moreinfo,
-      size,
-      id,
-      heater,
-      tv,
-      air,
-      fridge,
-      bike,
-      car,
-      fitness,
-      washer,
-      pool,
-      id,
-      key,
-      key_card,
-      camera,
-      guard,
-      finger_print,
-      id,
+      dorm_name,min,max,distance,url,wifi,address,moreinfo,size,id,
+      heater,tv,air,fridge,bike,car,fitness,washer,pool,id,
+      key,key_card,camera,guard,finger_print,id,
     ],
     (err, result) => {
       if (err) {
@@ -176,9 +176,32 @@ app.put("/update", (req, res) => {
   );
 });
 
+//Delete dorm(delete)
+app.delete("/delete/:id",(req,res)=>{
+  const id = req.params.id;
+  db.query(`
+  DELETE FROM dorm_detail
+  WHERE dorm_id = ?;
+
+  DELETE FROM facility
+  WHERE dorm_id = ?;
+
+  DELETE FROM safety
+  WHERE dorm_id = ?;
+  `,[id,id,id],(err,result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("delet dorm success");
+      res.send(result);
+    }
+  });
+})
+
 //Login (get) Not done
 
-//Help (get) Not done
+
+//Help  ticket(get)
 app.get("/ticket", (req, res) => {
   db.query("SELECT * FROM ticket", (err, result) => {
     if (err) {
@@ -189,6 +212,27 @@ app.get("/ticket", (req, res) => {
     }
   });
 });
+//Help message(get)
+app.get("/ticketMessage", (req, res) => {
+  console.log(req.query)
+  db.query(
+    `SELECT ticket_message.*,sender.user_name as sender,receiver.user_name as receiver FROM ticket_message
+    join user_data as sender on ticket_message.sender_id = sender.id
+    join user_data as receiver on ticket_message.receiver_id = receiver.id
+      WHERE ticket_id = ?
+      ORDER BY time ASC;
+  `,
+    [req.query.ticket_id],
+    (err, result) => {
+      if (typeof result == "undefined") {
+        res.send("");
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 //Help (post) Not done
 
 app.listen(3001, () => {

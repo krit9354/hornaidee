@@ -15,10 +15,11 @@ function Chat(){
     const {chatID} = useParams();
     const [chatData , setChatData] = useState([]);
     const [ messages , setMessages] = useState('');
+    const [ personCards , setPersonCards] = useState('');
     const navi = useNavigate();
 
     useEffect(() => {
-        const url = "http://localhost:3001/chat/1,2"
+        const url = "http://localhost:3001/chat/"+chatID
         axios.get(url).then((response) =>{
         setChatData(response.data);
         console.log(response.data)
@@ -29,14 +30,17 @@ function Chat(){
       },[location]);
 
 
+
+
     useEffect(() => {
         setMessages(chatData.map((message,index)=> {
             if(message.sender_id == student_id){
-                return  <MessageOwn key={index}>{message.message_text}</MessageOwn>   
+                return  <MessageOwn key={index} data={message}></MessageOwn>   
             }else{
-                return <Message key={index}>{message.message_text}</Message>   
+                return <Message key={index} data={message}></Message>   
             }
         }))
+        setPersonCards()
     },[location,chatData])
 
     return(

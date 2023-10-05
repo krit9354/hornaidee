@@ -11,12 +11,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 function Helppage() {
   const location = useLocation();
+  const { ticketID } = useParams();
   const [searchFilter, setsearchFilter] = useState("");
   const [ticketData, setTicketData] = useState([{
-    ticket_id : 153,
-    subject : "can you help me",
-    status : "completed",
-    update : "1/2/3"
+    ticket_id : "loading",
+    subject : "loading",
+    status : "loading",
+    update : "loading"
   }]
 );
   // const [tickets, setTickets] = useState('');
@@ -33,16 +34,6 @@ function Helppage() {
   },[location]);
 
 
-  // useEffect(() => {
-  //   setTickets(
-  //     ticketData.map((ticket, index) => {
-  //         return (
-  //           <Ticket key={index} ticket={ticket}/>
-  //         );
-  //       })
-  //   );
-  // }, [ticketData]);
-
   const tickets =   ticketData.filter((ticket) => {
           if (searchFilter != ""){
             return ticket.ticket_id == Number(searchFilter);
@@ -54,49 +45,43 @@ function Helppage() {
               <Ticket key={index} ticket={ticket}/>
             );
           });
-     
-
-  const ticket = {
-    ticket_id : 153,
-    subject : "can you help me",
-    status : "completed",
-    update : "1/2/3"
-  }
 
   return (
     <div>
       <Navbar></Navbar>
-      <div className="bg-white container m-auto w-[1050px]">
-        <div className="search flex justify-end items-center my-5">
-            <input
-              value={searchFilter}
-              onChange={(event) => setsearchFilter(event.target.value)}
-              className="mr-2 h-[34px] rounded  p-2 bg-cream border border-solid border-black"
-              type="text"
-              placeholder="find ticket...."
-            />
-        </div>
-        <div className="content flex gap-2 w-full">
-          <div>
-            <Filter section="filter">
-              <p><input type="radio" name="filter" className="mr-1"/>all</p>
-              <p><input type="radio" name="filter" className="mr-1"/>on hold</p>
-              <p><input type="radio" name="filter" className="mr-1"/>in progress</p>
-              <p><input type="radio" name="filter" className="mr-1"/>completed</p>
-            </Filter>
+      <div className="bg-old_yellow h-screen p-4 min-h-screen">
+        <div className="bg-white container m-auto w-[1050px] p-3 rounded-2xl min-h-full">
+          <div className="search flex justify-end items-center my-5">
+              <input
+                value={searchFilter}
+                onChange={(event) => setsearchFilter(event.target.value)}
+                className="mr-2 h-[34px] rounded  p-2 bg-cream border border-solid border-black"
+                type="text"
+                placeholder="find ticket...."
+              />
           </div>
-          <div className="grid grid-cols-1 w-full">
-            <div className="grid h-10 border-y border-gray border-solid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
-                <p className=" text-center">ticket</p>
-                <p  className="ml-4">subject</p>
-                <p className=" text-center">status</p>
-                <p className=" text-center">last update</p>
+          <div className="content flex gap-4 w-full">
+            <div>
+              <Filter section="filter">
+                <p><input type="radio" name="filter" className="mr-1"/>all</p>
+                <p><input type="radio" name="filter" className="mr-1"/>on hold</p>
+                <p><input type="radio" name="filter" className="mr-1"/>in progress</p>
+                <p><input type="radio" name="filter" className="mr-1"/>completed</p>
+              </Filter>
             </div>
-            {tickets}
+            <div className="grid grid-cols-1 w-full">
+              <div className="grid h-10 border-y border-gray border-solid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
+                  <p className=" text-center">ticket</p>
+                  <p  className="ml-4">subject</p>
+                  <p className=" text-center">status</p>
+                  <p className=" text-center">last update</p>
+              </div>
+              {tickets}
+            </div>
           </div>
         </div>
+            </div>
       </div>
-    </div>
   );
 }
 

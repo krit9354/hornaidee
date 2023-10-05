@@ -19,10 +19,31 @@ import SafetyDetail from "../components/safety_detail";
 import Reviewbox from "../components/reviewbox";
 import Writereview from "../components/Writereviwe";
 
+function Distance(distance){
+  if(distance >= 1000){
+      return distance/1000 + " กม."
+  } else {
+      return distance + " ม."
+  }
+}
+
+function MoreDetail(props){
+  const {data} = props
+  if (data){
+    return(
+      <div className="mt-4">
+        <div className=" text-lg clo font-semibold">เพิ่มเติม</div>
+        <div className="more_info">{data}</div>
+      </div>)
+  }
+}
+
 function Detaildorm() {
   const location = useLocation();
   const { dormID } = useParams();
   const [dormData, setDormData] = useState({});
+  const [ reviewData, setreviewData ] = useState([]);
+  const [ reviews, setReviews ] = useState([]);
   const navi = useNavigate();
   useEffect(() => {
     const url = 'http://localhost:3001/detail/'+dormID
@@ -33,6 +54,23 @@ function Detaildorm() {
       navi("/error")
     });
   },[location]);
+
+  useEffect(() => {
+    const url = 'http://localhost:3001/review/'+dormID
+    axios.get(url).then((response) =>{
+    setreviewData(response.data);
+    }).catch((err) =>{
+      console.log(err)
+    });
+  },[location]);
+
+  useEffect(() => {
+    setReviews(reviewData.map((review,index)=>{
+      return(
+        <Reviewbox name={review.writer} star={review.star} comment={review.comment} key={index}></Reviewbox>
+      )
+    }))
+  },[reviewData]);
 
   const dormImg = JSON.parse(dormData.url??"[]").map((URL,index) =>{
     return(<div className="flex h-full items-center bg-black justify-center" key={index}>
@@ -72,7 +110,7 @@ function Detaildorm() {
                 {dormData.min_price?dormData.min_price.toLocaleString('en-US'):dormData.min_price} - {dormData.max_price?dormData.max_price.toLocaleString('en-US'):dormData.max_price} บาท
               </div>
               <div>ระยะทางไปมอ</div> 
-              <div className="justify-end">{dormData.distance} เมตร</div>
+              <div className="justify-end">{Distance(dormData.distance)}</div>
               <div>ขนาดของห้อง</div>
               <div className=" justify-end">{dormData.size} ตารางเมตร</div>
               <div className="flex items-end h-8">อินเทอร์เน็ต</div>
@@ -84,10 +122,7 @@ function Detaildorm() {
             <div cla  ssName="address">{dormData.address}</div>
 
             {/* more info */}
-            {dormData.more_detail?()=><div>
-              <div className=" text-lg clo font-semibold">เพิ่มเติม</div>
-              <div className="more_info">{dormData.more_info}</div>
-            </div>:""}
+            <MoreDetail data={dormData.more_info}/>
 
             {/* Facility */}
             <div className="mt-8 text-lg clo font-semibold">
@@ -112,9 +147,7 @@ function Detaildorm() {
           <div className="register_box">
             <h2 className="text-2xl mb-2">review</h2>
             <Writereview name="HHJ2520"></Writereview>
-            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
-            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
-            <Reviewbox name="krit9354" star={3} comment="verrygood"></Reviewbox>
+            {reviews}
           </div>
         </div>
       </div>
