@@ -229,6 +229,27 @@ app.get("/ticket", (req, res) => {
     }
   });
 });
+//Help message(get)
+app.get("/ticketMessage", (req, res) => {
+  console.log(req.query)
+  db.query(
+    `SELECT ticket_message.*,sender.user_name as sender,receiver.user_name as receiver FROM ticket_message
+    join user_data as sender on ticket_message.sender_id = sender.id
+    join user_data as receiver on ticket_message.receiver_id = receiver.id
+      WHERE ticket_id = ?
+      ORDER BY time ASC;
+  `,
+    [req.query.ticket_id],
+    (err, result) => {
+      if (typeof result == "undefined") {
+        res.send("");
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 //Help (post) Not done
 
 app.listen(3001, () => {
