@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
-
+var jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 app.use(cors());
 app.use(express.json());
 
@@ -101,26 +103,75 @@ app.get("/person/:person", (req, res) => {
 
 //Register (post)
 app.post("/creat_user", (req, res) => {
-  const user_name = req.query.user_name;
-  const email = req.query.email;
-  const password = req.query.password;
-  const profile = req.query.profile;
+  const user_name = req.body.user_name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const profile = "no profile";
+  console.log(req.body);
+  bcrypt.hash(password, saltRounds, function (err, hash) {
+    db.query(
+      "INSERT INTO user_data (user_name, email, password,profile) VALUES(?,?,?,?)",
+      [user_name, email, hash, profile],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("add user success");
+          res.send(result);
+        }
+      }
+    );
+  });
+});
+// app.post("/creat_user", (req, res) => {
+//   const user_name = req.query.user_name;
+//   const email = req.query.email;
+//   const password = req.query.password;
+//   const profile = req.query.profile;
+//   console.log(req.query);
+//   db.query(
+//     "INSERT INTO user_data (user_name, email, password, profile) VALUES(?,?,?,?)",
+//     [user_name, email, password, profile],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log("add user success");
+//         res.send(result);
+//       }
+//     }
+//   );
+// });
+//Login (get) Not done
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
   console.log(req.query);
   db.query(
-    "INSERT INTO user_data (user_name, email, password, profile) VALUES(?,?,?,?)",
-    [user_name, email, password, profile],
-    (err, result) => {
+    "SELECT * FROM user_data WHERE email=?;",
+    [email],
+    (err, user, filef) => {
       if (err) {
         console.log(err);
-      } else {
-        console.log("add user success");
-        res.send(result);
       }
+      bcrypt.compare(password, user[0].password, function (err, result) {
+        if (result) {
+          var token = jwt.sign({ email: user[0].email }, "shhhhh", {
+            expiresIn: "1h",
+          });
+          console.log("login user success", token);
+        }
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
     }
   );
 });
 
-//Manage (post) Not done
+//Manage (post) 
 app.put("/update", (req, res) => {
   id = req.body.dorm.dorm_id;
   dorm_name = req.body.dorm.dorm_name;
@@ -188,7 +239,8 @@ app.delete("/delete/:id",(req,res)=>{
 
   DELETE FROM safety
   WHERE dorm_id = ?;
-  `,[id,id,id],(err,result) => {
+  `,[id,id,id],
+  (err,result) => {
     if (err) {
       console.log(err);
     } else {
@@ -198,7 +250,7 @@ app.delete("/delete/:id",(req,res)=>{
   });
 })
 
-//Login (get) Not done
+
 
 
 //Help  ticket(get)
