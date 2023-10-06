@@ -41,6 +41,7 @@ function Manage_detail() {
     }
 
     const deleteDorm = () => {
+        console.log("delete"+dormID)
         axios.delete("http://localhost:3001/delete/"+{dormID}).then(()=>{
             navi("/")
         })

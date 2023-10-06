@@ -9,7 +9,7 @@ function Confirm(props) {
             <div className='w-1/2 h-full bg-cream rounded-xl m-auto content-between justify-between flex flex-col'>
                 <p className='mt-[10%] text-center font-semibold text-5xl'>ยืนยันการลบหอพักนี้?</p>
                 <div className="flex mx-auto w-2/3 justify-between mb-[10%]">
-                    <Bt2 Width="150px" Height="50px">ยืนยัน</Bt2>
+                    <Bt2 Width="150px" Height="50px" onChange={confirm}>ยืนยัน</Bt2>
                     <Bt1 Width="150px" Height="50px" onChange={()=>{setStatus(!status)}}>ยกเลิก</Bt1>
                 </div>
             </div>

@@ -1,47 +1,58 @@
-
 import { useEffect, useState } from "react";
 import MessageOwn from "../components/meesageOwn";
 import Message from "../components/message";
 import Navbar from "../components/nav";
 import PersonCard from "../components/person_card";
 import "./chat.scoped.css"
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function Chat(){
     const student_id = 1;
     const dorm_id = 2;
     const location = useLocation();
-    const {chatID} = useParams();
+    const {chanel} = useParams();
     const [chatData , setChatData] = useState([]);
-    const [ messages , setMessages] = useState('');
-    const [ personCards , setPersonCards] = useState('');
+    const [personData , setPersonData] = useState([]);
     const navi = useNavigate();
 
     useEffect(() => {
-        const url = "http://localhost:3001/chat/"+chatID
-        axios.get(url).then((response) =>{
+        console.log(chanel)
+        axios.get("http://localhost:3001/chat/"+chanel).then((response) =>{
         setChatData(response.data);
-        console.log(response.data)
+        }).catch((err) =>{
+            console.log(err)
+            navi("/error")
+        });
+        console.log(chanel)
+        axios.get("http://localhost:3001/person/"+ student_id).then((response) =>{
+        setPersonData(response.data);
         }).catch((err) =>{
             console.log(err)
             navi("/error")
         });
       },[location]);
 
+    const messages = chatData.map((message,index)=> {
+                if(message.sender_id == student_id){
+                    return  <MessageOwn key={index} data={message}></MessageOwn>   
+                }else{
+                    return <Message key={index} data={message}></Message>   
+                }})
+    
+    const person_cards = personData.map((person,index) => {
+        const name = person.member1 == student_id ? person.user2:person.user1
+        return <Link to={"/chat/"+person.chanel_id} key={index}>
+            <PersonCard name={name}></PersonCard> 
+        </Link>
+    })
 
+    const chat_name = personData.filter((person) => {
+        return chanel == person.chanel_id
+    }).map((person) =>{
+        return person.member1 == student_id ? person.user2:person.user1
+    })
 
-
-    useEffect(() => {
-        setMessages(chatData.map((message,index)=> {
-            if(message.sender_id == student_id){
-                return  <MessageOwn key={index} data={message}></MessageOwn>   
-            }else{
-                return <Message key={index} data={message}></Message>   
-            }
-        }))
-        setPersonCards()
-    },[location,chatData])
 
     return(
         <div className="h-screen box-border">
@@ -53,22 +64,11 @@ function Chat(){
                         <input className="border-black border-solid border rounded-xl w-5/6 h-8 p-4" type="text" />
                     </div>
                     <div className="people overflow-scroll">
-                        <PersonCard></PersonCard> 
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard> 
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
-                        <PersonCard></PersonCard>
+                        {person_cards}
                     </div>
                 </div>
                 <div className="chat w-2/3 ">
-                    <div className="name text-black font-normal bg-brown h-14 flex items-center p-4 text-3xl">Ulike apartment</div>
+                    <div className="name text-black font-normal bg-brown h-14 flex items-center p-4 text-3xl">{chat_name}</div>
                     <div className="chat overflow-scroll">
 
                         {messages}

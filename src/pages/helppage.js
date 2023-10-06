@@ -13,6 +13,7 @@ function Helppage() {
   const location = useLocation();
   const { ticketID } = useParams();
   const [searchFilter, setsearchFilter] = useState("");
+  const [ filterStatus, setFilterStatus ] = useState("");
   const [ticketData, setTicketData] = useState([{
     ticket_id : "loading",
     subject : "loading",
@@ -38,13 +39,17 @@ function Helppage() {
           if (searchFilter != ""){
             return ticket.ticket_id == Number(searchFilter);
           } else {
-            return ticket
+            return ticket.status.includes(filterStatus);
           }
         }).map((ticket, index) => {
             return (
               <Ticket key={index} ticket={ticket}/>
             );
           });
+
+  const handleRatioChange = (event) => {
+    setFilterStatus(event.target.value)
+  }
 
   return (
     <div>
@@ -63,13 +68,13 @@ function Helppage() {
           <div className="content flex gap-4 w-full">
             <div>
               <Filter section="filter">
-                <p><input type="radio" name="filter" className="mr-1"/>all</p>
-                <p><input type="radio" name="filter" className="mr-1"/>on hold</p>
-                <p><input type="radio" name="filter" className="mr-1"/>in progress</p>
-                <p><input type="radio" name="filter" className="mr-1"/>completed</p>
+                <p><input type="radio" name="filter" value="" className="mr-1" onChange={handleRatioChange}/>all</p>
+                <p><input type="radio" name="filter" value="on hold" className="mr-1" onChange={handleRatioChange}/>on hold</p>
+                <p><input type="radio" name="filter" value="in progress" className="mr-1" onChange={handleRatioChange}/>in progress</p>
+                <p><input type="radio" name="filter" value="completed" className="mr-1" onChange={handleRatioChange}/>completed</p>
               </Filter>
             </div>
-            <div className="grid grid-cols-1 w-full">
+            <div className="grid grid-cols-1 w-full grid-flow-row">
               <div className="grid h-10 border-y border-gray border-solid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
                   <p className=" text-center">ticket</p>
                   <p  className="ml-4">subject</p>
