@@ -5,6 +5,10 @@ const cors = require("cors");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+const { Server } = require('socket.io');
+const http = require("http");
+
 app.use(cors());
 app.use(express.json());
 
@@ -14,6 +18,61 @@ const db = mysql.createConnection({
   password: "",
   database: "hornai_d",
   multipleStatements: true,
+});
+
+
+// app.listen(3001, () => {
+//   console.log("Yey, your server is running on port 3001");
+// });
+
+const server = http.createServer(app);
+
+//socket
+const io = new Server(server,{
+  cors:{
+    origin:"http://localhost:3000",
+    methods:["GET","POST"],
+  }
+})
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  socket.on("send message", (data) =>{
+    console.log(data);
+    db.query(
+      "INSERT INTO chat (chanel_id, sender_id, receiver_id, message_text) VALUES(?,?,?,?)",
+      [data.chanel,data.sender_id,data.receiver_id,data.message],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("add message success");
+        }
+      }
+    );
+    db.query(
+      `SELECT chat.*,sender.user_name as sender,receiver.user_name as receiver FROM chat
+      join user_data as sender on chat.sender_id = sender.id
+      join user_data as receiver on chat.receiver_id = receiver.id
+      WHERE chanel_id = ?
+      ORDER BY time ASC;
+    `,
+      [data.chanel],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          socket.emit("receive_message",result)
+          console.log("get message data")
+        }
+      }
+    );
+  })
+});
+
+//server
+server.listen(3001, () => {
+  console.log("Yey, your server is running on port 3001");
 });
 
 // App (get)
@@ -107,7 +166,6 @@ app.get("/person/:user", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("get person success");
         res.send(result);
       }
     }
@@ -246,7 +304,7 @@ app.put("/update", (req, res) => {
 
 //Delete dorm(delete)
 app.delete("/delete/:id",(req,res)=>{
-  console.log(req.params)
+  console.log(typeof req.params.id)
   const id = req.params.id;
   db.query(`
   DELETE FROM dorm_detail
@@ -305,6 +363,3 @@ app.get("/ticketMessage", (req, res) => {
 
 //Help (post) Not done
 
-app.listen(3001, () => {
-  console.log("Yey, your server is running on port 3001");
-});

@@ -1,19 +1,20 @@
 import "./Login.scoped.css";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 function Register() {
   const [username, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const navi = useNavigate()
   const adduser = () => {
     axios.post("http://localhost:3001/creat_user", {
       user_name: username,
       email: email,
       password: password,
     });
+    navi("/login")
   };
   return (
     <body className="bg-[#A0855B] h-screen flex justify-center items-center">

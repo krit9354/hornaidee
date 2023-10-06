@@ -6,9 +6,11 @@ import PersonCard from "../components/person_card";
 import "./chat.scoped.css"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { io } from "socket.io-client";
+
 
 function Chat(){
-    const student_id = 1;
+    const student_id =1;
     const dorm_id = 2;
     const location = useLocation();
     const {chanel} = useParams();
@@ -16,15 +18,31 @@ function Chat(){
     const [personData , setPersonData] = useState([]);
     const navi = useNavigate();
     const [textBox , setTextBox] = useState("");
+    const socket = io.connect("http://localhost:3001")
 
+
+    // const sendMessage = () => {
+    //     const receiver_id = personData.filter((person) => {
+    //         return chanel == person.chanel_id
+    //     }).map((person) =>{
+    //         return person.member1 == student_id ? person.member2:person.member1
+    //     })
+    //     console.log(receiver_id)
+    //     axios.post("http://localhost:3001/send_message",{
+    //         chanel:chanel,
+    //         sender_id:student_id,
+    //         receiver_id:receiver_id[0],
+    //         message:textBox
+    //     })
+    //     setTextBox("")
+    // }
     const sendMessage = () => {
         const receiver_id = personData.filter((person) => {
             return chanel == person.chanel_id
         }).map((person) =>{
             return person.member1 == student_id ? person.member2:person.member1
         })
-        console.log(receiver_id)
-        axios.post("http://localhost:3001/send_message",{
+        socket.emit("send message",{
             chanel:chanel,
             sender_id:student_id,
             receiver_id:receiver_id[0],
@@ -32,6 +50,11 @@ function Chat(){
         })
         setTextBox("")
     }
+    useEffect(() => {
+        socket.on("receive_message",(result) => {
+            setChatData(result)
+        })
+    },[socket])
 
     useEffect(() => {
         axios.get("http://localhost:3001/chat/"+chanel).then((response) =>{

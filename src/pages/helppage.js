@@ -74,14 +74,16 @@ function Helppage() {
                 <p><input type="radio" name="filter" value="completed" className="mr-1" onChange={handleRatioChange}/>completed</p>
               </Filter>
             </div>
-            <div className="grid grid-cols-1 w-full grid-flow-row">
-              <div className="grid h-10 border-y border-gray border-solid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
-                  <p className=" text-center">ticket</p>
-                  <p  className="ml-4">subject</p>
-                  <p className=" text-center">status</p>
-                  <p className=" text-center">last update</p>
+            <div className="w-full">
+              <div className="grid grid-cols-1 w-full grid-flow-row">
+                <div className="grid h-10 border-y border-gray border-solid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
+                    <p className=" text-center">ticket</p>
+                    <p  className="ml-4">subject</p>
+                    <p className=" text-center">status</p>
+                    <p className=" text-center">last update</p>
+                </div>
+                {tickets}
               </div>
-              {tickets}
             </div>
           </div>
         </div>
