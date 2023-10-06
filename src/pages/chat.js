@@ -15,16 +15,31 @@ function Chat(){
     const [chatData , setChatData] = useState([]);
     const [personData , setPersonData] = useState([]);
     const navi = useNavigate();
+    const [textBox , setTextBox] = useState("");
+
+    const sendMessage = () => {
+        const receiver_id = personData.filter((person) => {
+            return chanel == person.chanel_id
+        }).map((person) =>{
+            return person.member1 == student_id ? person.member2:person.member1
+        })
+        console.log(receiver_id)
+        axios.post("http://localhost:3001/send_message",{
+            chanel:chanel,
+            sender_id:student_id,
+            receiver_id:receiver_id[0],
+            message:textBox
+        })
+        setTextBox("")
+    }
 
     useEffect(() => {
-        console.log(chanel)
         axios.get("http://localhost:3001/chat/"+chanel).then((response) =>{
         setChatData(response.data);
         }).catch((err) =>{
             console.log(err)
             navi("/error")
         });
-        console.log(chanel)
         axios.get("http://localhost:3001/person/"+ student_id).then((response) =>{
         setPersonData(response.data);
         }).catch((err) =>{
@@ -54,6 +69,7 @@ function Chat(){
     })
 
 
+
     return(
         <div className="h-screen box-border">
             <Navbar></Navbar>
@@ -75,8 +91,15 @@ function Chat(){
 
                     </div>
                     <div className="input flex border-black border-solid border-t h-16">
-                        <input className="h-16 p-5 w-full" type="text" placeholder="Type somthing..." />
-                        <img src="\img\Telegram App.png"/>
+                        <input 
+                        className="h-16 p-5 w-full" 
+                        type="text" 
+                        placeholder="Type somthing..." 
+                        value={textBox} 
+                        onChange={(event) => {
+                            setTextBox(event.target.value)
+                        }}/>
+                        <img src="\img\Telegram App.png" onClick={sendMessage}/>
                     </div>
                 </div>
             </div>
