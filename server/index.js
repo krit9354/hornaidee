@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const cors = require("cors");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -15,9 +15,17 @@ app.use(express.json());
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
-  password: "",
+  password: "1234",
   database: "hornai_d",
-  multipleStatements: true,
+  // multipleStatements: true,
+});
+
+db.connect((err) => {
+  if (err) {
+    console.error('ไม่สามารถเชื่อมต่อฐานข้อมูลได้:', err);
+  } else {
+    console.log('เชื่อมต่อฐานข้อมูลสำเร็จ');
+  }
 });
 
 
