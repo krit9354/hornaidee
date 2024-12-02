@@ -1,8 +1,21 @@
 import "./Login.scoped.css";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 function Register() {
+  const [username, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const navi = useNavigate()
+  const adduser = () => {
+    axios.post("http://localhost:3001/creat_user", {
+      user_name: username,
+      email: email,
+      password: password,
+    });
+    navi("/login")
+  };
   return (
     <body className="bg-[#A0855B] h-screen flex justify-center items-center">
       <div className="bg-white flex flex-row px-6 py-12 lg:px-20  justify-center   border-black border-solid my-12 lg:my-56  border-2 rounded-md">
@@ -20,7 +33,25 @@ function Register() {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form className="space-y-6" action="#" method="POST">
+              <form className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-[#000000]"
+                  >
+                    Username
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      onChange={(event) => {
+                        setname(event.target.value);
+                      }}
+                      required
+                      className="p-3 block w-full rounded-md border-0 py-1.5 text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label
                     htmlFor="email"
@@ -30,12 +61,12 @@ function Register() {
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email"
-                      name="email"
-                      type="email"
                       autoComplete="email"
+                      onChange={(event) => {
+                        setemail(event.target.value);
+                      }}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                      className="p-3 block w-full rounded-md border-0 py-1.5 text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -52,12 +83,13 @@ function Register() {
                   </div>
                   <div className="mt-2">
                     <input
-                      id="password"
-                      name="password"
                       type="password"
                       autoComplete="current-password"
+                      onChange={(event) => {
+                        setpassword(event.target.value);
+                      }}
                       required
-                      className="block w-full rounded-md border-1 border-black py-1.5  text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                      className="p-3 block w-full rounded-md border-1 border-black py-1.5  text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -74,19 +106,17 @@ function Register() {
                   </div>
                   <div className="mt-2">
                     <input
-                      id="password"
-                      name="password"
                       type="password"
                       autoComplete="current-password"
                       required
-                      className="block w-full rounded-md border-1 border-black py-1.5  text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                      className="p-3 block w-full rounded-md border-1 border-black py-1.5  text-[#000000] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
 
                 <div>
                   <button
-                    type="submit"
+                    onClick={adduser}
                     className="flex w-full justify-center rounded-md bg-[#A0855B] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#ddb97f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-back"
                   >
                     Sign up

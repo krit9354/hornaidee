@@ -29,7 +29,11 @@ const router = createBrowserRouter([
     element: <Detaildorm />,
   },
   {
-    path: "chat/:chatID",
+    path: "chat/:chanel",
+    element: <Chat />,
+  },
+  {
+    path: "chat/",
     element: <Chat />,
   },
   {

@@ -2,7 +2,6 @@ import "./filter.scoped.css"
 import { useState } from "react";
 function Filter(props){
     const {section, children} = props
-
     const [ filterStatus , setFilterStatus] = useState(false);
     const openFilter = () => setFilterStatus(!filterStatus)
     

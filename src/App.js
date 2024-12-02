@@ -10,25 +10,32 @@ import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router";
 import Help from "./components/help";
 import Footer from "./components/footer";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { Slider, TextField } from "@mui/material";
 
 function Main() {
   const [dormlist, setdormlist] = useState([]);
   const [searchFilter, setsearchFilter] = useState("");
   const [dormCard, setDormCard] = useState("");
   const [searchClick, setSearchClick] = useState(0);
-  let checkStatus = {
-    price: {
-      "3000-4000": false,
-      "4000-5000": false,
-      "5000-6000": false,
-    },
-    distance: {
-      "100-200": false,
-      "200-300": false,
-      "300-400": false,
-    },
-  };
+  const [filter, setFilter] = useState({
+    minPrice:0,
+    maxPrice:10000,
+    minDistance:0,
+    maxDistance:10000
+  });
+  // let checkStatus = {
+  //   price: {
+  //     "3000-4000": false,
+  //     "4000-5000": false,
+  //     "5000-6000": false,
+  //   },
+  //   distance: {
+  //     "100-200": false,
+  //     "200-300": false,
+  //     "300-400": false,
+  //   },
+  // };
   const navi = useNavigate();
   const location = useLocation();
 
@@ -62,32 +69,45 @@ function Main() {
     console.log("update card" + searchClick);
   }, [location, dormlist, searchClick]);
 
-  const Check = (Price, Distance) => {
-    Price
-      ? (checkStatus.price[Price] = !checkStatus.price[Price])
-      : (checkStatus.price[Price] = checkStatus.price[Price]);
-    Distance
-      ? (checkStatus.distance[Distance] = !checkStatus.distance[Distance])
-      : (checkStatus.distance[Distance] = checkStatus.distance[Distance]);
+  const ClickFilter = () => {
+    const searchParams = new URLSearchParams(filter);
+    axios.get("http://localhost:3001/filter/?"+searchParams.toString())
+    .then((response) => {
+      setdormlist(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+
+  const handleChangePrice = (event, newValue) => {
+    setFilter({
+      maxDistance:filter.maxDistance,
+      minDistance:filter.minDistance,
+      minPrice:newValue[0],
+      maxPrice:newValue[1]
+    })
+  };
+  const handleChangeDistance = (event, newValue) => {
+    setFilter({
+      maxPrice:filter.maxPrice,
+      minPrice:filter.minPrice,
+      minDistance:newValue[0],
+      maxDistance:newValue[1]
+    })
   };
 
-  const clickFilter = () => {
-    let price_range = "";
-    let distance_range = "";
-    for (let [key, value] of Object.entries(checkStatus.price)) {
-      if (value) {
-        price_range += key + ",";
-      }
-    }
-    for (let [key, value] of Object.entries(checkStatus.distance)) {
-      if (value) {
-        distance_range += key + ",";
-      }
-    }
-    const url_filter = `/?price_range=${price_range}&distance_range=${distance_range}`;
-    navi(url_filter);
-  };
-  
+  const editFilter = (event) => {
+    const {name,value} = event.target;
+    setFilter((prevfilter) => {
+        return {
+            ...prevfilter,
+            [name] : value
+        }
+    })
+}
+
 
   return (
     <div className="Main">
@@ -112,29 +132,72 @@ function Main() {
         </div>
         <div className="content">
           <div className="filter">
+
+            {/* price */}
             <Filter section="price">
-              <Choice Check={Check} price="3000-4000">
-                3,000-4,000 บาท
-              </Choice>
-              <Choice Check={Check} price="4000-5000">
-                4,000-5,000 บาท
-              </Choice>
-              <Choice Check={Check} price="5000-6000">
-                5,000-6,000 บาท
-              </Choice>
+              <div className="mt-2 mx-2 flex items-center  justify-between">
+              <TextField
+                name="minPrice"
+                label="min"
+                value={filter.minPrice} 
+                className="w-[4.5rem]" 
+                size="small"
+                onChange={editFilter}
+              />
+                -
+              <TextField
+                name="maxPrice"
+                label="max"
+                value={filter.maxPrice} 
+                className="w-[4.5rem]" 
+                size="small"
+                onChange={editFilter}
+              />
+              </div>
+              <Slider
+                getAriaLabel={() => 'Temperature range'}
+                value={[filter.minPrice,filter.maxPrice]}
+                onChange={handleChangePrice}
+                step={500}
+                min={0}
+                max={10000}
+              />
+              <div></div>
+
             </Filter>
-            <Filter section="ระยะทาง">
-              <Choice Check={Check} distance="0-100">
-                0-100ม.
-              </Choice>
-              <Choice Check={Check} distance="100-200">
-                100-200ม.
-              </Choice>
-              <Choice Check={Check} distance="200-300">
-                200-300ม.
-              </Choice>
+
+            {/* distance */}
+            <Filter section="ระยะทาง(ม.)">
+            <div className="mt-2 mx-2 flex items-center  justify-between">
+              <TextField
+                name="minDistance"
+                label="min"
+                value={filter.minDistance} 
+                className="w-[4.5rem]" 
+                size="small"
+                onChange={editFilter}
+              />
+                -
+              <TextField
+                name="maxDistance"
+                label="max"
+                value={filter.maxDistance} 
+                className=" w-[4.5rem]" 
+                size="small"
+                onChange={editFilter}
+              />
+              </div>
+              <Slider
+                getAriaLabel={() => 'Temperature range'}
+                value={[filter.minDistance,filter.maxDistance]}
+                onChange={handleChangeDistance}
+                step={100}
+                min={0}
+                max={10000}
+              />
+              <div></div>
             </Filter>
-            <button className="btn-filter" onClick={clickFilter}>
+            <button className="btn-filter" onClick={ClickFilter}>
               <img
                 src="/img/search.png"
                 style={{ width: "30px", marginRight: "5px" }}

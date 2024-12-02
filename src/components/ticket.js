@@ -63,7 +63,7 @@ function Ticket(props) {
 
     return (
         <div className='w-full border-b border-gray border-solid'>
-            <div className="head h-10 ">
+            <div className="head h-10">
                 <div className="grid" style={{gridTemplateColumns:"1fr 4fr 2fr 2fr 1fr"}}>
                     <p className=" text-center">{ticket.ticket_id}</p>
                     <p className="ml-4">{ticket.subject}</p>

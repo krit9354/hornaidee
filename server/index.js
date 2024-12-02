@@ -5,6 +5,10 @@ const cors = require("cors");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+const { Server } = require('socket.io');
+const http = require("http");
+
 app.use(cors());
 app.use(express.json());
 
@@ -24,12 +28,83 @@ db.connect((err) => {
   }
 });
 
+
+// app.listen(3001, () => {
+//   console.log("Yey, your server is running on port 3001");
+// });
+
+const server = http.createServer(app);
+
+//socket
+const io = new Server(server,{
+  cors:{
+    origin:"http://localhost:3000",
+    methods:["GET","POST"],
+  }
+})
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  socket.on("send message", (data) =>{
+    console.log(data);
+    db.query(
+      "INSERT INTO chat (chanel_id, sender_id, receiver_id, message_text) VALUES(?,?,?,?)",
+      [data.chanel,data.sender_id,data.receiver_id,data.message],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("add message success");
+        }
+      }
+    );
+    db.query(
+      `SELECT chat.*,sender.user_name as sender,receiver.user_name as receiver FROM chat
+      join user_data as sender on chat.sender_id = sender.id
+      join user_data as receiver on chat.receiver_id = receiver.id
+      WHERE chanel_id = ?
+      ORDER BY time ASC;
+    `,
+      [data.chanel],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          socket.emit("receive_message",result)
+          console.log("get message data")
+        }
+      }
+    );
+  })
+});
+
+//server
+server.listen(3001, () => {
+  console.log("Yey, your server is running on port 3001");
+});
+
 // App (get)
 app.get("/", (req, res) => {
   db.query("SELECT* FROM dorm_detail", (err, result) => {
     res.send(result);
   });
 });
+
+//filter(get)
+app.get("/filter",(req,res) => {
+  console.log(req.query)
+  db.query(`SELECT * FROM dorm_detail 
+  WHERE min_price >= ? and max_price <= ?
+  and  distance >= ? and distance <= ?;`,
+  [req.query.minPrice,req.query.maxPrice,req.query.minDistance,req.query.maxDistance],
+  (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result);
+    }
+  })
+})
 
 // Dorm Detail (get)
 app.get("/detail/:dormID", (req, res) => {
@@ -68,16 +143,15 @@ WHERE  dorm_id = ?;
 })
 
 // Chat (get chat data)
-app.get("/chat/:chatID", (req, res) => {
-  const p = req.params.chatID.split(",");
+app.get("/chat/:chanel", (req, res) => {
   db.query(
     `SELECT chat.*,sender.user_name as sender,receiver.user_name as receiver FROM chat
     join user_data as sender on chat.sender_id = sender.id
     join user_data as receiver on chat.receiver_id = receiver.id
-    WHERE sender_id = ? or sender_id = ?
+    WHERE chanel_id = ?
     ORDER BY time ASC;
   `,
-    [p[0], p[1]],
+    [req.params.chanel],
     (err, result) => {
       if (typeof result == "undefined") {
         res.status(404).send();
@@ -89,25 +163,44 @@ app.get("/chat/:chatID", (req, res) => {
 });
 
 // Chat (get person)
-app.get("/person/:person", (req, res) => {
-  console.log(req.params.person);
+app.get("/person/:user", (req, res) => {
   db.query(
-    `SELECT DISTINCT chat.receiver_id,chat.sender_id,sender.user_name as sender,receiver.user_name as receiver FROM chat
-    join user_data as sender on chat.sender_id = sender.id
-    join user_data as receiver on chat.receiver_id = receiver.id
-      WHERE sender_id = 1 or sender_id = 2;`,
-    [[req.params.person], [req.params.person]],
+    `SELECT chanel.*,user1.user_name as user1,user2.user_name as user2 FROM chanel
+    JOIN user_data AS user1 ON chanel.member1 = user1.id
+    JOIN user_data AS user2 ON chanel.member2 = user2.id
+    WHERE chanel.member1 = ? OR chanel.member2 = ?;`,
+    [[req.params.user], [req.params.user]],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("get person success");
         res.send(result);
       }
     }
   );
 });
-// Chat (post send message) Not done
+
+// Chat (post send message)
+app.post("/send_message",(req,res) => {
+  console.log(req.body)
+  chanel = req.body.chanel
+  sender = req.body.sender_id
+  receiver = req.body.receiver_id
+  message = req.body.message
+  db.query(
+    "INSERT INTO chat (chanel_id, sender_id, receiver_id, message_text) VALUES(?,?,?,?)",
+    [chanel,sender,receiver,message],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("add message success");
+        res.send(result);
+      }
+    }
+  );
+})
+
 
 //Register (post)
 app.post("/creat_user", (req, res) => {
@@ -131,26 +224,8 @@ app.post("/creat_user", (req, res) => {
     );
   });
 });
-// app.post("/creat_user", (req, res) => {
-//   const user_name = req.query.user_name;
-//   const email = req.query.email;
-//   const password = req.query.password;
-//   const profile = req.query.profile;
-//   console.log(req.query);
-//   db.query(
-//     "INSERT INTO user_data (user_name, email, password, profile) VALUES(?,?,?,?)",
-//     [user_name, email, password, profile],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log("add user success");
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
-//Login (get) Not done
+
+//login
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -237,6 +312,7 @@ app.put("/update", (req, res) => {
 
 //Delete dorm(delete)
 app.delete("/delete/:id",(req,res)=>{
+  console.log(typeof req.params.id)
   const id = req.params.id;
   db.query(`
   DELETE FROM dorm_detail
@@ -295,6 +371,3 @@ app.get("/ticketMessage", (req, res) => {
 
 //Help (post) Not done
 
-app.listen(3001, () => {
-  console.log("Yey, your server is running on port 3001");
-});
