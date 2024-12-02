@@ -13,11 +13,13 @@ import Footer from "../components/footer";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/nav";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FacilityDetail from "../components/facility_detail";
 import SafetyDetail from "../components/safety_detail";
 import Reviewbox from "../components/reviewbox";
 import Writereview from "../components/Writereviwe";
+import { userContext } from "../App";
+
 
 function Distance(distance){
   if(distance >= 1000){
@@ -38,7 +40,34 @@ function MoreDetail(props){
   }
 }
 
+function ChatButton(props){
+  const {dormData,navi} = props
+  const {user} = useContext(userContext)
+  const getChanel = () => {
+    axios.get("http://localhost:3001/get_chanel",{
+      params: {
+        user1 : user.id,
+        user2 : dormData.owner_id
+      }
+    }).then((response) => {
+      console.log(response)
+      navi("/chat/"+user.id+"/"+response.data.chanel_id)
+    })
+  }
+  if(!!user.actor){
+    return(
+      <div className="chat-button" onClick={getChanel}>
+        <div className="bt">
+          <QuestionAnswerIcon />
+          <p>chat</p>
+        </div>
+      </div>
+    )
+  }
+}
+
 function Detaildorm() {
+
   const location = useLocation();
   const { dormID } = useParams();
   const [dormData, setDormData] = useState({});
@@ -70,6 +99,18 @@ function Detaildorm() {
       )
     }))
   },[reviewData]);
+
+  // const getChanel = () => {
+  //   axios.get("http://localhost:3001/get_chanel",{
+  //     params: {
+  //       user1 : 1,
+  //       user2 : dormData.owner_id
+  //     }
+  //   }).then((response) => {
+  //     console.log(response)
+  //     navi("/chat/"+userID+"/"+response.data.chanel_id)
+  //   })
+  // }
 
   const dormImg = (dormData.url??[]).map((URL,index) =>{
     return(<div className="flex h-full items-center bg-black justify-center" key={index}>
@@ -113,12 +154,12 @@ function Detaildorm() {
               <div>ขนาดของห้อง</div>
               <div className=" justify-end">{dormData.size} ตารางเมตร</div>
               <div className="flex items-end h-8">อินเทอร์เน็ต</div>
-              <div className="flex items-end justify-end h-8">{dormData.wifi} บาท</div>
+              <div className="flex items-end justify-end h-8">{dormData.wifi == "free"?dormData.wifi:dormData.wifi  +" บาท"}</div>
             </div>
 
             {/* address */}
             <div className=" text-lg clo font-semibold">ที่อยู่</div>
-            <div cla  ssName="address">{dormData.address}</div>
+            <div className="address">{dormData.address}</div>
 
             {/* more info */}
             <MoreDetail data={dormData.more_info}/>
@@ -135,17 +176,18 @@ function Detaildorm() {
             </div>
             <SafetyDetail dorm={dormData} />
 
-            <div className="chat-button">
-              <a href="" className="bt">
+            <ChatButton dormData={dormData} navi={navi}/>
+            {/* <div className="chat-button" onClick={getChanel}>
+              <div className="bt">
                 <QuestionAnswerIcon />
                 <p>chat</p>
-              </a>
-            </div>
+              </div>
+            </div> */}
           </div>
 
           <div className="register_box">
             <h2 className="text-2xl mb-2">review</h2>
-            <Writereview name="HHJ2520"></Writereview>
+            <Writereview dormID={dormID}></Writereview>
             {reviews}
           </div>
         </div>

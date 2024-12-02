@@ -21,6 +21,6 @@
   background-color: rgba(160, 133, 91, 1);
 }
 
-.right_nav *:not(:last-child) {
+/* .right_nav *:not(:last-child) {
   margin-right: 10px;
-}
+} */

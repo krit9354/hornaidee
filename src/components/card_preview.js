@@ -5,7 +5,7 @@ function Card_previwe(props){
     return(
         <div className="card_preview">
             <div className="image_preview relative">
-                <img src={dorm.url?JSON.parse(dorm.url)[0].url:""}/>
+                <img src={dorm.url?dorm.url[0].url:""}/>
                 
             </div>
             <div className="info">

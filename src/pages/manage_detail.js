@@ -26,7 +26,6 @@ function Manage_detail() {
         axios.get(url).then((response) =>{
         setDormData(response.data);
         console.log(response.data);
-        // console.log(JSON.parse(response.data.url));
         }).catch((err) =>{
             navi("/error")
             console.log(err);
@@ -43,7 +42,7 @@ function Manage_detail() {
     const deleteDorm = () => {
         console.log("delete"+dormID)
         axios.delete("http://localhost:3001/delete/"+dormID).then(()=>{
-            navi("/")
+            navi("/login")
         })
     }
 
@@ -149,8 +148,8 @@ function Manage_detail() {
                         </div>
                     </div>
                     <div className="flex w-96 justify-between">
-                        <Bt2 Width="175px" Height="50px" onChange={()=>{setConfirmStatus(!confirmStatus)}}>ลบ</Bt2>
                         <Bt2 Width="175px" Height="50px" onChange={updateDorm}>แก้ไข</Bt2>
+                        <Bt2 Width="175px" Height="50px" onChange={()=>{setConfirmStatus(!confirmStatus)}}>ลบ</Bt2>
                     </div>
                     
                 </div>

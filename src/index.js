@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -11,53 +11,15 @@ import Chat from "./pages/chat";
 import Manage_detail from "./pages/manage_detail";
 import Error from "./pages/error";
 import Helppage from "./pages/helppage";
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "Login",
-    element: <Login />,
-  },
-  {
-    path: "Register",
-    element: <Register />,
-  },
-  {
-    path: "detail/:dormID",
-    element: <Detaildorm />,
-  },
-  {
-    path: "chat/:chanel",
-    element: <Chat />,
-  },
-  {
-    path: "chat/",
-    element: <Chat />,
-  },
-  {
-    path: "manage/:dormID",
-    element: <Manage_detail></Manage_detail>,
-  },
-  {
-    path: "*",
-    element: <Error></Error>,
-  },
-  {
-    path: "help",
-    element: <Helppage></Helppage>,
-  },
-  {
-    path: "help/:ticketID",
-    element: <Helppage></Helppage>,
-  }
-]);
+import axios from "axios";
+import Main from "./pages/main";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App></App>
   </React.StrictMode>
 );
 

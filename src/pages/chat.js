@@ -10,32 +10,24 @@ import { io } from "socket.io-client";
 
 
 function Chat(){
-    const student_id =1;
+    // const student_id = 1;
     const dorm_id = 2;
     const location = useLocation();
-    const {chanel} = useParams();
+    const { userID : student_id,chanel} = useParams();
     const [chatData , setChatData] = useState([]);
     const [personData , setPersonData] = useState([]);
+    const [searchFilter, setsearchFilter] = useState("");
     const navi = useNavigate();
     const [textBox , setTextBox] = useState("");
     const socket = io.connect("http://localhost:3001")
 
 
-    // const sendMessage = () => {
-    //     const receiver_id = personData.filter((person) => {
-    //         return chanel == person.chanel_id
-    //     }).map((person) =>{
-    //         return person.member1 == student_id ? person.member2:person.member1
-    //     })
-    //     console.log(receiver_id)
-    //     axios.post("http://localhost:3001/send_message",{
-    //         chanel:chanel,
-    //         sender_id:student_id,
-    //         receiver_id:receiver_id[0],
-    //         message:textBox
-    //     })
-    //     setTextBox("")
-    // }
+
+    useEffect(() => {
+        console.log("chanel : "+chanel)
+        socket.emit("join_chanel",chanel);
+    },[chanel]);
+
     const sendMessage = () => {
         const receiver_id = personData.filter((person) => {
             return chanel == person.chanel_id
@@ -52,6 +44,7 @@ function Chat(){
     }
     useEffect(() => {
         socket.on("receive_message",(result) => {
+            console.log("receive")
             setChatData(result)
         })
     },[socket])
@@ -64,12 +57,16 @@ function Chat(){
             navi("/error")
         });
         axios.get("http://localhost:3001/person/"+ student_id).then((response) =>{
-        setPersonData(response.data);
+                const person_data = response.data.filter((person) => {
+                const name = person.member1 == student_id ? person.user2:person.user1
+                return name.includes(searchFilter);
+            })
+        setPersonData(person_data);
         }).catch((err) =>{
             console.log(err)
             navi("/error")
         });
-      },[location]);
+      },[location,searchFilter]);
 
     const messages = chatData.map((message,index)=> {
                 if(message.sender_id == student_id){
@@ -80,8 +77,9 @@ function Chat(){
     
     const person_cards = personData.map((person,index) => {
         const name = person.member1 == student_id ? person.user2:person.user1
-        return <Link to={"/chat/"+person.chanel_id} key={index}>
-            <PersonCard name={name}></PersonCard> 
+        const profile = person.member1 == student_id ? person.profile2:person.profile1
+        return <Link to={"/chat/"+student_id+'/'+person.chanel_id} key={index}>
+            <PersonCard name={name} profile={profile}></PersonCard> 
         </Link>
     })
 
@@ -100,7 +98,12 @@ function Chat(){
                 <div className="left w-1/3 h-full border-black border-solid border-r">
                     <div className="head text-white bg-brown h-14 flex items-center p-4 font-bold text-3xl">Chat</div>
                     <div className="search m-auto justify-center flex my-4">
-                        <input className="border-black border-solid border rounded-xl w-5/6 h-8 p-4" type="text" />
+                        <input
+                        className="border-black border-solid border rounded-xl w-5/6 h-8 p-4"
+                        type="text"
+                        value={searchFilter}
+                        onChange={(e) => {setsearchFilter(e.target.value)}}
+                        />
                     </div>
                     <div className="people overflow-scroll">
                         {person_cards}

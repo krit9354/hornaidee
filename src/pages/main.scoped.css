@@ -17,7 +17,7 @@
 
 .container{
     width: 1050px;
-    margin-inline: auto;
+    margin: auto;
     height: 1000px;
     /* border: black 1px solid; */
 }

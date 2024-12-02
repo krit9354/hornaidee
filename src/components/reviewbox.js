@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 function Reviewbox(props) {
   const { name, star, comment } = props;
+  
   return (
     <div className="bg-white mb-[10px] rounded-lg shadow-md p-0">
       <Box sx={{ flexGrow: 1, overflow: "hidden", width: 300, p: 2 }}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Bt1 from "../components/bt1";
 import Navbar from "../components/nav";
@@ -9,7 +9,11 @@ import Filter from "../components/filter";
 import Ticket from "../components/ticket";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { userContext } from "../App";
+
+
 function Helppage() {
+  const {user} = useContext(userContext)
   const location = useLocation();
   const { ticketID } = useParams();
   const [searchFilter, setsearchFilter] = useState("");
@@ -24,17 +28,21 @@ function Helppage() {
   // const [tickets, setTickets] = useState('');
   const navi = useNavigate();
   useEffect(() => {
+    console.log("user id :"+user)
     const url = 'http://localhost:3001/ticket'
-    axios.get(url).then((response) =>{
+    axios.get(url,{
+      params : {
+        user_id : user?.id
+      }
+    }).then((response) =>{
     setTicketData(response.data);
     console.log("ticketDat")
     console.log(ticketData)
     }).catch((err) =>{
       navi("/error")
     });
-  },[location]);
-
-
+  },[user]);
+  
   const tickets =   ticketData.filter((ticket) => {
           if (searchFilter != ""){
             return ticket.ticket_id == Number(searchFilter);
@@ -67,12 +75,12 @@ function Helppage() {
           </div>
           <div className="content flex gap-4 w-full">
             <div>
-              <Filter section="filter">
+            <Filter section="filter">
                 <p><input type="radio" name="filter" value="" className="mr-1" onChange={handleRatioChange}/>all</p>
                 <p><input type="radio" name="filter" value="on hold" className="mr-1" onChange={handleRatioChange}/>on hold</p>
                 <p><input type="radio" name="filter" value="in progress" className="mr-1" onChange={handleRatioChange}/>in progress</p>
                 <p><input type="radio" name="filter" value="completed" className="mr-1" onChange={handleRatioChange}/>completed</p>
-              </Filter>
+            </Filter>
             </div>
             <div className="w-full">
               <div className="grid grid-cols-1 w-full grid-flow-row">
