@@ -49,7 +49,6 @@ function Detaildorm() {
     const url = 'http://localhost:3001/detail/'+dormID
     axios.get(url).then((response) =>{
     setDormData(response.data);
-    console.log(JSON.parse(response.data.url));
     }).catch((err) =>{
       navi("/error")
     });
@@ -72,7 +71,7 @@ function Detaildorm() {
     }))
   },[reviewData]);
 
-  const dormImg = JSON.parse(dormData.url??"[]").map((URL,index) =>{
+  const dormImg = (dormData.url??[]).map((URL,index) =>{
     return(<div className="flex h-full items-center bg-black justify-center" key={index}>
       <img
         className=""
