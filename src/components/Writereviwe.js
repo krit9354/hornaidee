@@ -9,14 +9,13 @@ import axios from "axios";
 import { userContext } from "../App";
 function Writereview(props) {
   const {user} = useContext(userContext)
-  const user_id = 1
   const { dormID } = props;
   const [star ,setStar] = useState(0)
   const [comment ,setComment] = useState("")
   const sendReview = () => {
     axios.post("http://localhost:3001/write_review",{
       dorm_id:dormID,
-      writer_id:user_id,
+      writer_id:user.id,
       star:star,
       comment:comment
     }).then(()=>{window.location.reload()})
@@ -32,7 +31,7 @@ function Writereview(props) {
               <AccountCircleIcon sx={{ fontSize: 45 }} />
             </Grid>
             <Grid item xs zeroMinWidth>
-              <Typography noWrap>name</Typography>
+              <Typography noWrap>{user.username}</Typography>
               <Rating size="large" name="simple-controlled" value={star} onChange={(e) => {setStar(Number(e.target.value))}}/>
             </Grid>
           </Grid>

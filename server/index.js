@@ -413,6 +413,7 @@ app.delete("/delete/:id", (req, res) => {
 //Help  ticket(get)
 app.get("/ticket", (req, res) => {
   const user_id = req.query.user_id
+  console.log("user id : ",req.query.user_id)
   console.log("user_id" ,typeof user_id)
   var filter = "WHERE user_id = "+ user_id+";"
   if(user_id ==="0"){
