@@ -1,0 +1,50 @@
+name: Run Robot Framework Tests
+
+on:
+  push:
+    branches:
+      - main  # ระบุ branch ที่ต้องการ
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout source code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Setup Node.js (สำหรับโปรเจค React)
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # ระบุเวอร์ชัน Node.js ที่ใช้ในโปรเจค
+
+    # Install project dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Start React App (Background)
+    - name: Start React App
+      run: npm run dev &
+      env:
+        CI: true
+
+    # Setup Python (สำหรับ Robot Framework)
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9 # ระบุเวอร์ชัน Python ที่คุณใช้
+
+    # Install Robot Framework และ Dependencies
+    - name: Install Robot Framework
+      run: |
+        python -m pip install --upgrade pip
+        pip install robotframework
+        pip install robotframework-seleniumlibrary
+
+    # Run Robot Framework Tests
+    - name: Run Robot Tests
+      run: |
+        robot -d results robot_test/main.robot

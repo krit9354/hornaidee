@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.13.0 on win32)" generated="2024-12-08T21:50:42.722468" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot Test" source="D:\project\hornaidee\robot_test">
+<suite id="s1-s1" name="Main" source="D:\project\hornaidee\robot_test\main.robot">
+<test id="s1-s1-t1" name="see dorm detail" line="10">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2024-12-08T21:50:43.030982" elapsed="0.000240"/>
+</kw>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-12-08T21:50:43.031646" level="INFO">Opening browser 'Edge' to base url 'http://localhost:3000/'.</msg>
+<arg>${HOME_PAGE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-12-08T21:50:43.031449" elapsed="3.302814"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-12-08T21:50:46.335028" level="INFO">Clicking element 'xpath = .//h6[.//text() = "Ulike apartment"]'.</msg>
+<arg>xpath = .//h6[.//text() = "Ulike apartment"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-12-08T21:50:46.334678" elapsed="2.093395"/>
+</kw>
+<kw name="Location Should Be" owner="SeleniumLibrary">
+<msg time="2024-12-08T21:50:49.432458" level="INFO">Current location is 'http://localhost:3000/detail/1'.</msg>
+<arg>${HOME_PAGE_URL}detail/1</arg>
+<doc>Verifies that the current URL is exactly ``url``.</doc>
+<status status="PASS" start="2024-12-08T21:50:48.428341" elapsed="1.004432"/>
+</kw>
+<status status="PASS" start="2024-12-08T21:50:43.030177" elapsed="6.403506"/>
+</test>
+<test id="s1-s1-t2" name="go to login" line="16">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-12-08T21:50:49.438088" level="INFO">Clicking element 'xpath = .//button[.//text() = "login"]'.</msg>
+<arg>xpath = .//button[.//text() = "login"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-12-08T21:50:49.437434" elapsed="2.078247"/>
+</kw>
+<kw name="Location Should Be" owner="SeleniumLibrary">
+<msg time="2024-12-08T21:50:52.526153" level="INFO">Current location is 'http://localhost:3000/login'.</msg>
+<arg>${HOME_PAGE_URL}login</arg>
+<doc>Verifies that the current URL is exactly ``url``.</doc>
+<status status="PASS" start="2024-12-08T21:50:51.516728" elapsed="1.009758"/>
+</kw>
+<status status="PASS" start="2024-12-08T21:50:49.436053" elapsed="3.091707"/>
+</test>
+<status status="PASS" start="2024-12-08T21:50:42.758573" elapsed="9.772352"/>
+</suite>
+<status status="PASS" start="2024-12-08T21:50:42.724138" elapsed="9.810031"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Robot Test">Robot Test</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s1" name="Main">Robot Test.Main</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
