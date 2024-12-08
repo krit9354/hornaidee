@@ -27,7 +27,8 @@ jobs:
           python3 -m venv .venv
           . .venv/bin/activate
           python -m pip install --upgrade pip
-          pip install robotframework robotframework-seleniumlibrary
+          pip install robotframework
+          pip install robotframework-seleniumlibrary
 
       # Setup Node.js
       - name: Setup Node.js
@@ -56,4 +57,4 @@ jobs:
       - name: Run Robot Tests
         run: |
           . .venv/bin/activate
-          robot -d results robot_test/main.robot
+          robot --loglevel DEBUG -d results robot_test/main.robot
