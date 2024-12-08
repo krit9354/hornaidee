@@ -12,7 +12,7 @@ jobs:
 
     container:
       image: selenium/standalone-chrome:latest
-      options: --user root  # รัน Docker ด้วย root user
+      options: --user root
 
     steps:
       # Checkout source code
@@ -23,17 +23,17 @@ jobs:
       - name: Setup Python Virtual Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-venv python3-pip  # ติดตั้ง venv และ pip
-          python3 -m venv .venv  # สร้าง Virtual Environment
-          . .venv/bin/activate  # ใช้ . แทน source เพื่อรองรับ sh
-          python -m pip install --upgrade pip  # อัปเกรด pip
-          pip install robotframework robotframework-seleniumlibrary  # ติดตั้ง Robot Framework และ SeleniumLibrary
+          sudo apt-get install -y python3-venv python3-pip
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install robotframework robotframework-seleniumlibrary
 
       # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # ระบุ Node.js เวอร์ชันที่ต้องการใช้
+          node-version: 18
 
       # Install dependencies for React App
       - name: Install React dependencies
@@ -42,7 +42,7 @@ jobs:
       # Start React App in the background
       - name: Start React App
         run: |
-          nohup npm run dev &  # รัน React App เป็น background process
+          nohup npm run dev &
         env:
           CI: true
 
@@ -50,10 +50,10 @@ jobs:
       - name: Wait for React App to Start
         run: |
           echo "Waiting for React App to start..."
-          sleep 30  # รอ 30 วินาทีให้ React App พร้อมใช้งาน
+          sleep 30
 
       # Run Robot Framework Tests
       - name: Run Robot Tests
         run: |
-          . .venv/bin/activate  # ใช้ . แทน source เพื่อรองรับ sh
-          robot -d results robot_test/main.robot  # รันไฟล์ Robot Tests
+          . .venv/bin/activate
+          robot -d results robot_test/main.robot

@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary
+Library    SeleniumLibrary    log_level=DEBUG
 
 *** Variables ***
 ${BROWSER}        chrome
