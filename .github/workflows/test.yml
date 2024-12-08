@@ -12,50 +12,39 @@ jobs:
 
     container:
       image: selenium/standalone-chrome:latest
-      options: --user root  # รัน Docker ด้วย user root
+      options: --user root
 
     steps:
-      # Checkout source code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Install dependencies for React App
       - name: Install React dependencies
         run: npm install
 
-      # Start React App in the background
       - name: Start React App
         run: |
-          nohup npm run dev & # ใช้ nohup เพื่อรัน React App เป็น background process
+          nohup npm run dev &
         env:
           CI: true
 
-      # Setup Python environment
-      - name: Setup Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.9
-
-      # Install Robot Framework and dependencies
-      - name: Install Robot Framework
+      - name: Setup Python Virtual Environment
         run: |
-          python -m pip install --upgrade pip --break-system-packages
-          pip install robotframework
-          pip install robotframework-seleniumlibrary
+          python3 -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install robotframework robotframework-seleniumlibrary
 
-      # Wait for React App to be ready
       - name: Wait for React App to start
         run: |
           echo "Waiting for React App to start..."
-          sleep 30 # รอให้ React App พร้อม
+          sleep 30
 
-      # Run Robot Framework Tests
       - name: Run Robot Tests
         run: |
+          source .venv/bin/activate
           robot -d results robot_test/main.robot
