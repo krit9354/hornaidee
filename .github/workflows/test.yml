@@ -11,18 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: selenium/standalone-chrome:latest  # Docker Image พร้อม Chrome และ ChromeDriver
+      image: selenium/standalone-chrome:latest
+      options: --user root  # รัน Docker ด้วย root user
 
     steps:
+      # Fix permission issues
+      - name: Fix permissions
+        run: |
+          sudo chmod -R 777 /__w/  # เพิ่มสิทธิ์ให้โฟลเดอร์ใน Workflow
+
       # Checkout source code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # ใช้ Node.js เวอร์ชัน LTS
+
+      # Install dependencies for React App
+      - name: Install React dependencies
+        run: npm install
+
+      # Start React App in the background
+      - name: Start React App
+        run: |
+          nohup npm run dev &
+        env:
+          CI: true
 
       # Setup Python
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: 3.9  # ระบุ Python เวอร์ชันที่ต้องการใช้
+          python-version: 3.9
 
       # Install Robot Framework and Dependencies
       - name: Install Robot Framework
@@ -30,20 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install robotframework robotframework-seleniumlibrary
 
-      # Start React App
-      - name: Start React App
-        run: |
-          nohup npm run dev &  # รัน React App เป็น background process
-        env:
-          CI: true
-
-      # Wait for React App to Start
-      - name: Wait for React App to Start
-        run: |
-          echo "Waiting for React App to start..."
-          sleep 30  # รอ 30 วินาทีให้ React App พร้อม
-
       # Run Robot Framework Tests
       - name: Run Robot Tests
         run: |
-          robot -d results ./robot_test
+          robot -d results robot_test/main.robot
