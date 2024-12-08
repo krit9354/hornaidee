@@ -10,41 +10,52 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    container:
+      image: selenium/standalone-chrome:latest  # ใช้ Docker Image พร้อม Chrome และ ChromeDriver
+      options: --user root  # รัน Docker ด้วย user root
+
     steps:
-    # Checkout source code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Checkout source code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Setup Node.js (สำหรับโปรเจค React)
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18 # ระบุเวอร์ชัน Node.js ที่ใช้ในโปรเจค
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # ระบุ Node.js เวอร์ชันที่ต้องการใช้
 
-    # Install project dependencies
-    - name: Install dependencies
-      run: npm install
+      # Install dependencies for React App
+      - name: Install React dependencies
+        run: npm install
 
-    # Start React App (Background)
-    - name: Start React App
-      run: npm run dev &
-      env:
-        CI: true
+      # Start React App in the background
+      - name: Start React App
+        run: |
+          nohup npm run dev &  # รัน React App เป็น background process
+        env:
+          CI: true
 
-    # Setup Python (สำหรับ Robot Framework)
-    - name: Setup Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.9 # ระบุเวอร์ชัน Python ที่คุณใช้
+      # Setup Python environment
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9  # ระบุ Python เวอร์ชันที่ต้องการใช้
 
-    # Install Robot Framework และ Dependencies
-    - name: Install Robot Framework
-      run: |
-        python -m pip install --upgrade pip
-        pip install robotframework
-        pip install robotframework-seleniumlibrary
+      # Install Robot Framework and dependencies
+      - name: Install Robot Framework
+        run: |
+          python -m pip install --upgrade pip
+          pip install robotframework
+          pip install robotframework-seleniumlibrary
 
-    # Run Robot Framework Tests
-    - name: Run Robot Tests
-      run: |
-        robot -d results robot_test/main.robot
+      # Wait for React App to start
+      - name: Wait for React App to start
+        run: |
+          echo "Waiting for React App to start..."
+          sleep 30  # รอ 30 วินาทีให้ React App พร้อมใช้งาน
+
+      # Run Robot Framework Tests
+      - name: Run Robot Tests
+        run: |
+          robot -d results robot_test/main.robot
