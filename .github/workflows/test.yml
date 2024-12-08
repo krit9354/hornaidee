@@ -15,23 +15,34 @@ jobs:
       options: --user root
 
     steps:
+      # Checkout source code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # Install dependencies for React App
       - name: Install React dependencies
         run: npm install
 
+      # Start React App in the background
       - name: Start React App
         run: |
           nohup npm run dev &
         env:
           CI: true
 
+      # Install python3-venv
+      - name: Install python3-venv
+        run: |
+          apt-get update
+          apt-get install -y python3-venv
+
+      # Setup Python Virtual Environment
       - name: Setup Python Virtual Environment
         run: |
           python3 -m venv .venv
@@ -39,11 +50,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install robotframework robotframework-seleniumlibrary
 
+      # Wait for React App to start
       - name: Wait for React App to start
         run: |
           echo "Waiting for React App to start..."
           sleep 30
 
+      # Run Robot Framework Tests
       - name: Run Robot Tests
         run: |
           source .venv/bin/activate
