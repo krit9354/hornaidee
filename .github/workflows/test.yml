@@ -23,7 +23,7 @@ jobs:
 
     # Start React App (Background)
     - name: Start React App
-      run: npm run dev &
+      run: npm start &
       env:
         CI: true
 
