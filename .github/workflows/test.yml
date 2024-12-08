@@ -25,18 +25,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
-        echo "Chromedriver installed at: $(which chromedriver)"
 
-    # Start React App (Background)
-    - name: Start React App
-      run: npm start &
-      env:
-        CI: true
-
-    - name: Run tests
+    - name: Run Robot Framework Tests
       uses: joonvena/robotframework-docker-action@v1.0
       with:
         robot_tests_dir: test
+      env:
+        ROBOT_BROWSER: chrome
+        ROBOT_DRIVER_PATH: /usr/bin/chromedriver
     # - name: Store test report
     #   uses: actions/upload-artifact@v2
     #   if: always()
