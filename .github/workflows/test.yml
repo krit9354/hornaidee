@@ -11,24 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: selenium/standalone-chrome:latest
+      image: selenium/standalone-chrome:latest  # Docker Image พร้อม Chrome และ ChromeDriver
       options: --user root  # รัน Docker ด้วย root user
 
     steps:
-      # Fix permission issues
-      - name: Fix permissions
-        run: |
-          sudo chmod -R 777 /__w/  # เพิ่มสิทธิ์ให้โฟลเดอร์ใน Workflow
-
       # Checkout source code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Node.js
+      # Setup Python Virtual Environment
+      - name: Setup Python Virtual Environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-venv python3-pip  # ติดตั้ง venv และ pip
+          python3 -m venv .venv  # สร้าง Virtual Environment
+          source .venv/bin/activate  # ใช้งาน Virtual Environment
+          python -m pip install --upgrade pip  # อัปเกรด pip
+          pip install robotframework robotframework-seleniumlibrary  # ติดตั้ง Robot Framework และ SeleniumLibrary
+
+      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # ใช้ Node.js เวอร์ชัน LTS
+          node-version: 18  # ระบุ Node.js เวอร์ชันที่ต้องการใช้
 
       # Install dependencies for React App
       - name: Install React dependencies
@@ -37,23 +42,18 @@ jobs:
       # Start React App in the background
       - name: Start React App
         run: |
-          nohup npm run dev &
+          nohup npm run dev &  # รัน React App เป็น background process
         env:
           CI: true
 
-      # Setup Python
-      - name: Setup Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.9
-
-      # Install Robot Framework and Dependencies
-      - name: Install Robot Framework
+      # Wait for React App to Start
+      - name: Wait for React App to Start
         run: |
-          python -m pip install --upgrade pip
-          pip install robotframework robotframework-seleniumlibrary
+          echo "Waiting for React App to start..."
+          sleep 30  # รอ 30 วินาทีให้ React App พร้อมใช้งาน
 
       # Run Robot Framework Tests
       - name: Run Robot Tests
         run: |
-          robot -d results robot_test/main.robot
+          source .venv/bin/activate  # ใช้งาน Virtual Environment
+          robot -d results robot_test/main.robot  # รันไฟล์ Robot Tests
