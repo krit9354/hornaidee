@@ -55,6 +55,12 @@ jobs:
         unzip chromedriver_linux64.zip -d /usr/local/bin/
         rm chromedriver_linux64.zip
 
+    - name: Install Specific ChromeDriver
+      run: |
+        wget "https://chromedriver.storage.googleapis.com/131.0.6778.85/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip -d /usr/local/bin/
+        rm chromedriver_linux64.zip
+
 
 
     # Run Robot Framework Tests
