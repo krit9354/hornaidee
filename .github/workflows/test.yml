@@ -1,64 +1,54 @@
-name: Run Robot Framework Tests
+name: Robot Framework Reporter Demo
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
+  push:
+    branches: [ master ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout source code
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
-      # Install Chrome and ChromeDriver
-      - name: Install Chrome and ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -n 1)
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%.*}")
-          wget "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip -d /usr/local/bin/
-          rm chromedriver_linux64.zip
+    # Setup Node.js (สำหรับโปรเจค React)
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # ระบุเวอร์ชัน Node.js ที่ใช้ในโปรเจค
 
-      # Setup Python Virtual Environment
-      - name: Setup Python Virtual Environment
-        run: |
-          python3 -m venv .venv
-          . .venv/bin/activate
-          python -m pip install --upgrade pip
-          pip install robotframework robotframework-seleniumlibrary
+    # Install project dependencies
+    - name: Install dependencies
+      run: npm install
 
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    # Start React App (Background)
+    - name: Start React App
+      run: npm run dev &
+      env:
+        CI: true
 
-      # Install dependencies for React App
-      - name: Install React dependencies
-        run: npm install
+    - name: Run tests
+      uses: joonvena/robotframework-docker-action@v1.0
+      with:
+        robot_tests_dir: test
+    - name: Store test report
+      uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: reports
+        path: reports
 
-      # Start React App in the background
-      - name: Start React App
-        run: |
-          nohup npm run dev &
-        env:
-          CI: true
-
-      # Wait for React App to Start
-      - name: Wait for React App to Start
-        run: |
-          echo "Waiting for React App to start..."
-          sleep 30
-
-      # Run Robot Framework Tests
-      - name: Run Robot Tests
-        run: |
-          . .venv/bin/activate
-          robot -d results robot_test/main.robot
+  report:
+    if: always()
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download test report
+      uses: actions/download-artifact@v1
+      with:
+        name: reports
+    - name: Output report
+      uses: joonvena/robotframework-reporter-action@v2
+      with:
+        gh_access_token: ${{ secrets.GITHUB_TOKEN }}
