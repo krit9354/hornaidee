@@ -2,7 +2,7 @@
 Library    SeleniumLibrary
 
 *** Variables ***
-${BROWSER}        Edge
+${BROWSER}        chrome
 ${DELAY}          1
 ${HOME_PAGE_URL}    http://localhost:3000/
 
