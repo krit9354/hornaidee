@@ -1,6 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
-
+Suite Setup    Log Source
 *** Variables ***
 ${BROWSER}        chrome
 ${DELAY}          1

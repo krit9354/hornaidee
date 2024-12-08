@@ -10,25 +10,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    container:
-      image: selenium/standalone-chrome:latest
-      options: --user root
-
     steps:
       # Checkout source code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Install Chrome and ChromeDriver
+      - name: Install Chrome and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -n 1)
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%.*}")
+          wget "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip -d /usr/local/bin/
+          rm chromedriver_linux64.zip
+
       # Setup Python Virtual Environment
       - name: Setup Python Virtual Environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-venv python3-pip
           python3 -m venv .venv
           . .venv/bin/activate
           python -m pip install --upgrade pip
-          pip install robotframework
-          pip install robotframework-seleniumlibrary
+          pip install robotframework robotframework-seleniumlibrary
 
       # Setup Node.js
       - name: Setup Node.js
@@ -57,4 +61,4 @@ jobs:
       - name: Run Robot Tests
         run: |
           . .venv/bin/activate
-          robot --loglevel DEBUG -d results robot_test/main.robot
+          robot -d results robot_test/main.robot
