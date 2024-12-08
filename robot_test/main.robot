@@ -8,8 +8,8 @@ ${HOME_PAGE_URL}    http://localhost:3000/
 
 *** Test Cases ***
 see dorm detail
-    Set Selenium Speed    ${DELAY}
-    Open Browser    ${HOME_PAGE_URL}
+    Open Browser    ${HOME_PAGE_URL}    chrome
+    Set Selenium Speed    ${DELAY}    
     Click Element    xpath = .//h6[.//text() = "Ulike apartment"]
     Location Should Be    ${HOME_PAGE_URL}detail/1
 
