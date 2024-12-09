@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install Chromium and Chromedriver
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
@@ -23,6 +23,9 @@ jobs:
       env:
         ROBOT_BROWSER: chrome
         ROBOT_DRIVER_PATH: /usr/bin/chromedriver
+
+
+
     # - name: Store test report
     #   uses: actions/upload-artifact@v2
     #   if: always()
