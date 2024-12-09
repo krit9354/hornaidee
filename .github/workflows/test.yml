@@ -11,16 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Setup Node.js (สำหรับโปรเจค React)
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18 # ระบุเวอร์ชัน Node.js ที่ใช้ในโปรเจค
-
-    # Install project dependencies
-    - name: Install dependencies
-      run: npm install
-
     - name: Install dependencies
       run: |
         sudo apt-get update
