@@ -1,4 +1,4 @@
-robotframework==6.1.2
-robotframework-seleniumlibrary==6.1.0
+robotframework
+robotframework-seleniumlibrary
 selenium==4.10.0
 chromedriver-autoinstaller==0.5.1
