@@ -1,26 +1,41 @@
-name: Robot Framework CI
+name: CI
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  Run-Test:
-    runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
-      - uses: actions/cache@v2
-        id: cache
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v5.0.0
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirement.txt') }}
-      - name: Install pip dependencies
+          python-version: 3.12.2
+
+      - name: Setup Workspace
         run: |
-          pip install --upgrade pip
-          pip install -r requirement.txt
-      - name: Run Test
-        run: python -m robot --outputdir results ./test
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade robotframework-seleniumlibrary
+
+      - name: Run Tests
+        run: $GITHUB_WORKSPACE/.venv/bin/python3.12 -m robot.run --suite test-automation-101-rf.tests.smoke.login --outputdir $GITHUB_WORKSPACE/results ./test/
+      
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: rf-results
+          path: results/
