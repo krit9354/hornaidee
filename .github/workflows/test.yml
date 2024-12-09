@@ -1,49 +1,41 @@
-name: Robot Framework Reporter Demo
+name: Robot Framework CI
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  Run-Test:
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Install Chromium and Chromedriver
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-
-    - name: Run Robot Framework Tests
-      uses: joonvena/robotframework-docker-action@v1.0
-      with:
-        robot_tests_dir: test
-      env:
-        ROBOT_BROWSER: chrome
-        ROBOT_DRIVER_PATH: /usr/bin/chromedriver
-
-
-
-    # - name: Store test report
-    #   uses: actions/upload-artifact@v2
-    #   if: always()
-    #   with:
-    #     name: reports
-    #     path: reports
-
-#   report:
-#     if: always()
-#     needs: [test]
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Download test report
-#       uses: actions/download-artifact@v1
-#       with:
-#         name: reports
-#     - name: Output report
-#       uses: joonvena/robotframework-reporter-action@v2
-#       with:
-#         gh_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirement.txt') }}
+      - name: Install pip dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirement.txt
+      - name: Run Test
+        run: python -m robot --outputdir results test/
+      - name: Run Test and create report
+        run: python -m robot -d reports -x junit-report.xml "test/"
+      - name: Run Robot Framework tests and generate report
+        run: |
+           echo "ROBOT_RC=$?" >> "$GITHUB_ENV"  
+      # - name: If Auto Test Pass Rate Not 100%, Job Will Fail
+      #   if: env.ROBOT_RC != '0'
+      #   run: |
+      #     echo "Auto Test Pass Rate Not 100%, Please Check Test Result"
+      #     exit 1
+      - name: Publish test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: robot-test-results
+          path: results
