@@ -1,16 +1,17 @@
 *** Settings ***
 Library    SeleniumLibrary
-Suite Setup    Log Source
 *** Variables ***
 ${BROWSER}        chrome
 ${DELAY}          1
 ${HOME_PAGE_URL}    http://localhost:3000/
 
 *** Test Cases ***
-see dorm detail
+open chrome
     Open Browser    https://www.google.com/    chrome
+    Set Selenium Speed    ${DELAY}   
+
+see dorm detail
     Go To    ${HOME_PAGE_URL}
-    Set Selenium Speed    ${DELAY}    
     Click Element    xpath = .//h6[.//text() = "Ulike apartment"]
     Location Should Be    ${HOME_PAGE_URL}detail/1
 
