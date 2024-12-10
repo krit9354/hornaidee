@@ -16,11 +16,16 @@ jobs:
           run: |
             chmod -R 777 ${{ github.workspace }}/reports
         - name: Execute tests
-          uses: ppodgorsek/robot-framework@latest
-          env:
-            BROWSER: chrome
-            ROBOT_TESTS_DIR: ${{ github.workspace }}/robot_tests
-            ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
+          uses: joonvena/robotframework-docker-action@v1.0
+          with:
+            browser: 'chrome'
+            robot_tests_dir: ${{ github.workspace }}/robot_tests
+            robot_reports_dir: ${{ github.workspace }}/reports
+
+          # env:
+          #   BROWSER: chrome
+          #   ROBOT_TESTS_DIR: ${{ github.workspace }}/robot_tests
+          #   ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
             
         - name: Upload test results
           uses: actions/upload-artifact@v3
