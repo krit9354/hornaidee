@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # อนุญาตให้รัน workflow นี้แบบ manual จากแท็บ Actions
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
             ROBOT_TESTS_DIR: ${{ github.workspace }}/robot_tests
             ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
         - name: Upload test results
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v3
           if: always()
           with:
             name: reports
